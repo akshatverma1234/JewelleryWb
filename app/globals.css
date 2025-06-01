@@ -147,3 +147,15 @@ header .topstrip {
 .box:hover {
   box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
 }
+
+.MuiTabs-indicator {
+  background-color: #b76e79 !important;
+}
+.MuiTab-textColorPrimary {
+  color: #b76e79 !important;
+}
+.productsSlider .swiper-wrapper {
+  padding: 15px;
+  margin-left: -15px;
+  margin-right: -15px;
+}

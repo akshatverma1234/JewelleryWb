@@ -7,6 +7,7 @@ import HomeSlider from "@/components/HomeSlider/index";
 import { FaShippingFast } from "react-icons/fa";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
+import ProductsSlider from "@/components/ProductsSlider/index";
 
 const Home = () => {
   const [value, setValue] = useState(0);
@@ -47,6 +48,7 @@ const Home = () => {
               </Tabs>
             </div>
           </div>
+          <ProductsSlider items={5} />
         </div>
       </section>
       <section className="!py-16 bg-white">
