@@ -1,0 +1,10 @@
+.searchBox input::placeholder {
+  color: #333333 !important;
+}
+
+.searchBox input::placeholder {
+  padding-left: 12px; /* Adjust padding as needed */
+}
+.searchBox input {
+  border-radius: 10px; /* Parent container rounded */
+}
