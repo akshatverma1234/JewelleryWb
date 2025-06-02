@@ -9,7 +9,7 @@ import Tooltip from "@mui/material/Tooltip";
 
 const ProductItems = () => {
   return (
-    <div className="productItem rounded-md overflow-hidden shadow-lg">
+    <div className="productItem rounded-md overflow-hidden shadow-lg box">
       <div className="imgWrapper w-[100%] overflow-hidden rounded-md relative group">
         <Link href="/">
           <div className="img h-[230px] overflow-hidden">

@@ -12,7 +12,7 @@ const Navigation = () => {
   };
   return (
     <>
-      <nav className="!py-2">
+      <nav>
         <div className="container flex items-baseline justify-end gap-5">
           <div className="col_1 w-[20%]">
             <Button className="!text-black gap-2 w-full" onClick={OpenCategory}>
@@ -28,7 +28,7 @@ const Navigation = () => {
             <ul className="flex items-center gap-5 nav">
               <li className="list-none">
                 <Link href="/">
-                  <Button className="link transition text-[14px] !font-[500] !text-black hover:!text-[#b76e79]">
+                  <Button className="link transition text-[14px] !font-[500] !text-black hover:!text-[#b76e79] !py-4">
                     HOME
                   </Button>
                 </Link>
@@ -38,7 +38,7 @@ const Navigation = () => {
                   href="/"
                   className="link transition text-[14px] font-[500]"
                 >
-                  <Button className="link transition text-[14px] !font-[500] !text-black hover:!text-[#b76e79]">
+                  <Button className="link transition text-[14px] !font-[500] !text-black hover:!text-[#b76e79] !py-4">
                     MEN'S JEWELLERY
                   </Button>
                 </Link>
@@ -87,7 +87,7 @@ const Navigation = () => {
                   href="/"
                   className="link transition text-[14px] font-[500]"
                 >
-                  <Button className="link transition text-[14px] !font-[500] !text-black hover:!text-[#b76e79]">
+                  <Button className="link transition text-[14px] !font-[500] !text-black hover:!text-[#b76e79] !py-4">
                     WOMENS'S JEWELLERY
                   </Button>
                 </Link>
@@ -97,7 +97,7 @@ const Navigation = () => {
                   href="/"
                   className="link transition text-[14px] font-[500]"
                 >
-                  <Button className="link transition text-[14px] !font-[500] !text-black hover:!text-[#b76e79]">
+                  <Button className="link transition text-[14px] !font-[500] !text-black hover:!text-[#b76e79] !py-4">
                     KID'S JEWELLERY
                   </Button>
                 </Link>
@@ -107,7 +107,7 @@ const Navigation = () => {
                   href="/"
                   className="link transition text-[14px] font-[500]"
                 >
-                  <Button className="link transition text-[14px] !font-[500] !text-black hover:!text-[#b76e79]">
+                  <Button className="link transition text-[14px] !font-[500] !text-black hover:!text-[#b76e79] !py-4">
                     LATEST COLLECTION
                   </Button>
                 </Link>

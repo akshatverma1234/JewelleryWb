@@ -8,6 +8,7 @@ import { FaShippingFast } from "react-icons/fa";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import ProductsSlider from "@/components/ProductsSlider/index";
+import Footer from "@/components/Footer/index";
 
 const Home = () => {
   const [value, setValue] = useState(0);
@@ -25,7 +26,7 @@ const Home = () => {
         <div className="container-fluid">
           <div className="flex items-center justify-between">
             <div className="leftSec">
-              <h2 className="text-[20px] font-[600]">Popular Products</h2>
+              <h2 className="text-[24px] font-[600]">Popular Products</h2>
               <p className="text-[14px] font-[400]">
                 Do not miss the current offers until the end of the November
               </p>
@@ -51,7 +52,7 @@ const Home = () => {
           <ProductsSlider items={5} />
         </div>
       </section>
-      <section className="!py-16 bg-white">
+      <section className="!py-16 !pt-2 bg-white">
         <div className="container">
           <div className="freeShipping w-[80%] !m-auto !py-4 !p-4 border-2 border-red-500 flex items-center justify-between rounded-md !mb-7">
             <div className="col1 flex items-center gap-4">
@@ -71,12 +72,24 @@ const Home = () => {
         </div>
       </section>
 
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
+      <section className="!py-5 !pt-0 bg-white">
+        <div className="container">
+          <h2 className="text-[24px] font-[600]">Latest Products</h2>
+          <ProductsSlider items={6} />
+          <AdsBannerSlider items={3} />
+        </div>
+      </section>
+      <section className="!py-5 !pt-0 bg-white">
+        <div className="container">
+          <h2 className="text-[24px] font-[600]">Featured Products</h2>
+          <ProductsSlider items={6} />
+
+          <AdsBannerSlider items={3} />
+        </div>
+      </section>
+
+      <Footer />
+
       {/* <Drawer
         anchor="right"
         open={openCart}

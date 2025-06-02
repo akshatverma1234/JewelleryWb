@@ -12,6 +12,7 @@ const HomeSlider = () => {
         <Swiper
           modules={[Navigation, Autoplay]}
           spaceBetween={10}
+          loop={true}
           navigation={true}
           autoplay={{
             delay: 2500,
