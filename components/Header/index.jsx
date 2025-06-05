@@ -53,7 +53,7 @@ const Header = () => {
           </div>
         </div>
       </div>
-      <div className="header py-2 border-b-[1px] border-gray-200 ">
+      <div className="header py-2 border-gray-200 ">
         <div className="container flex items-center justify-between h-19">
           <div className="col1 w-[25%]">
             <Link href="/">

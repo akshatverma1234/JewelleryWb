@@ -18,7 +18,6 @@ const Home = () => {
   };
   return (
     <div>
-      <Header />
       <HomeSlider />
       <CategoriesSlider />
 
@@ -87,8 +86,6 @@ const Home = () => {
           <AdsBannerSlider items={3} />
         </div>
       </section>
-
-      <Footer />
 
       {/* <Drawer
         anchor="right"

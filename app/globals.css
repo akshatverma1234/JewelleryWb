@@ -19,6 +19,7 @@ body {
   font-style: normal;
   background-color: #c0c0c0;
   overflow-x: hidden;
+  color: #5c5c5c;
 }
 
 /* Scrollbar container (width/height) */
@@ -166,6 +167,63 @@ header .topstrip {
   font-weight: 500 !important;
   font-size: 16px !important;
 }
+
+.btn-org:hover {
+  background-color: rgb(23, 23, 23) !important;
+}
 footer form input::placeholder {
   font-size: 15px;
+}
+.MuiCheckbox-root {
+  padding: 6px !important;
+}
+.ReactCollapse--collapse {
+  transition: height 400ms;
+}
+.ItemsView button svg {
+  color: rgba(0, 0, 0, 0.7);
+  opacity: 0.8;
+  transition: all 0.2s ease;
+}
+
+.ItemsView button.active svg {
+  color: #f08922 !important;
+  opacity: 1;
+}
+.Mui-selected.MuiPaginationItem-page {
+  background-color: #b682e7 !important;
+  color: #ffff !important;
+}
+.zoomProductSlider .swiper-wrapper {
+  padding-top: 38px !important;
+}
+.zoomProductSlider .swiper-button-next {
+  bottom: 0px !important;
+  right: inherit !important;
+  top: inherit !important;
+  width: 100% !important;
+  height: 30px !important;
+  border-radius: 0px !important ;
+}
+.zoomProductSlider .swiper-button-prev {
+  right: inherit !important;
+  left: 0px !important;
+  top: 20px !important;
+  width: 100% !important;
+  height: 30px !important;
+  border-radius: 0px !important ;
+}
+.zoomProductSlider .swiper-button-prev::after,
+.zoomProductSlider .swiper-button-next::after {
+  transform: rotate(90deg);
+}
+p {
+  font-size: 14px;
+  line-height: 25 px;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
