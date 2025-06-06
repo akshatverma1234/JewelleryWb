@@ -40,7 +40,7 @@ const ProductItems = () => {
         </div>
       </div>
       <div className="info !p-3 !py-5">
-        <h6 className="text-[13px]">
+        <h6 className="text-[13px] !font-[400]">
           <Link href="/" className="link transition-all">
             Gold Ring
           </Link>
