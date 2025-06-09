@@ -8,6 +8,8 @@ import { IoCartOutline } from "react-icons/io5";
 import { FaRegHeart } from "react-icons/fa";
 import Tooltip from "@mui/material/Tooltip";
 import Navigation from "./Navigation";
+import { useContext } from "react";
+import { MyContext } from "@/context/AppContext";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -19,6 +21,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 const Header = () => {
+  const context = useContext(MyContext);
   return (
     <header className="bg-white">
       <div className="topstrip py-2 border-t-[1px] border-gray-200 border-b-[1px]">
@@ -93,7 +96,11 @@ const Header = () => {
               </li>
               <li>
                 <Tooltip title="Cart">
-                  <IconButton aria-label="cart" className="!p-0">
+                  <IconButton
+                    aria-label="cart"
+                    className="!p-0"
+                    onClick={() => context.setOpenCartPanel(true)}
+                  >
                     <StyledBadge badgeContent={4} color="secondary">
                       <IoCartOutline size={34} />
                     </StyledBadge>

@@ -9,6 +9,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import ProductsSlider from "@/components/ProductsSlider/index";
 import Footer from "@/components/Footer/index";
+import Drawer from "@mui/material/Drawer";
 
 const Home = () => {
   const [value, setValue] = useState(0);
@@ -86,22 +87,6 @@ const Home = () => {
           <AdsBannerSlider items={3} />
         </div>
       </section>
-
-      {/* <Drawer
-        anchor="right"
-        open={openCart}
-        onClose={toggleDrawerCart(false)}
-        className=" w-[250px]"
-      >
-        <div className="flex items-center justify-between p-4 border-b border-[rgba(0,0,0,0.1)] ">
-          <h1>Shopping Cart (1)</h1>
-          <IoMdClose
-            className="text-[20px] cursor-pointer"
-            onClick={() => setOpenCart(false)}
-          />
-        </div>
-        <CartPanel cartItems={cartItems} />
-      </Drawer> */}
     </div>
   );
 };

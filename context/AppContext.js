@@ -3,13 +3,17 @@ import { createContext, useContext, useState } from "react";
 import React from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 import ProductZoom from "@/components/ProductZoom/index";
 import { IoMdClose } from "react-icons/io";
 import ProductDetailsComponent from "@/components/ProductDetails/index";
+import Drawer from "@mui/material/Drawer";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import List from "@mui/material/List";
+import CartPanel from "@/components/CartPanel";
 
 const MyContext = createContext();
 
@@ -18,43 +22,70 @@ export const AppProvider = ({ children }) => {
   const [fullWidth, setFullWidth] = useState(true);
   const [maxWidth, setMaxWidth] = useState("lg");
 
+  const [openCartPanel, setOpenCartPanel] = useState(false);
+
+  const toggleDrawerCart = (newOpen) => {
+    setOpenCartPanel(newOpen);
+  };
+
   const handleCloseProductsModel = () => {
     setOpenProductModel(false);
   };
 
   const values = {
     setOpenProductModel,
+    setOpenCartPanel,
+    toggleDrawerCart,
+    openCartPanel,
   };
   return (
     <>
-      {" "}
-      <MyContext.Provider value={values}>{children}</MyContext.Provider>
-      <Dialog
-        open={openProductsModel}
-        onClose={handleCloseProductsModel}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        className="productDetailsModal"
-        fullWidth={fullWidth}
-        maxWidth={maxWidth}
-      >
-        <DialogContent>
-          <div className="flex items-center w-full productDetailsModal relative">
-            <Button
-              className="!w-[40px] !h-[40px] !min-w-[40px] !rounded-full !text-black !absolute !top-[15px] !right-[15px] !bg-[#f1f1f1]"
-              onClick={handleCloseProductsModel}
-            >
-              <IoMdClose className="!text-[20px]" />
-            </Button>
-            <div className="col1 w-[40%] px-3">
-              <ProductZoom />
+      <MyContext.Provider value={values}>
+        {children}
+
+        {/* Product Modal */}
+        <Dialog
+          open={openProductsModel}
+          onClose={handleCloseProductsModel}
+          fullWidth={fullWidth}
+          maxWidth={maxWidth}
+          className="productDetailsModal"
+        >
+          <DialogContent>
+            <div className="flex items-center w-full productDetailsModal !relative">
+              <button
+                className=" !w-[40px] !h-[40px] !min-w-[40px] !rounded-full !text-black !absolute !top-[15px] !right-[15px] !bg-[#f1f1f1] cursor-pointer"
+                onClick={handleCloseProductsModel}
+              >
+                <IoMdClose className="!text-[20px]" />
+              </button>
+              <div className="col1 w-[40%] !px-3">
+                <ProductZoom />
+              </div>
+              <div className="col2 w-[60%] !py-8 !px-8 !pr-16  productContent">
+                <ProductDetailsComponent />
+              </div>
             </div>
-            <div className="col2 w-[60%] !py-8 !px-8 !pr-16  productContent">
-              <ProductDetailsComponent />
-            </div>
+          </DialogContent>
+        </Dialog>
+
+        {/* Cart Panel */}
+        <Drawer
+          anchor="right"
+          open={openCartPanel}
+          onClose={() => toggleDrawerCart(false)}
+          className="w-[250px]"
+        >
+          <div className="flex items-center justify-between !p-4 border-b border-[rgba(0,0,0,0.1)]">
+            <h1>Shopping Cart (1)</h1>
+            <IoMdClose
+              className="!text-[20px] cursor-pointer"
+              onClick={() => toggleDrawerCart(false)}
+            />
           </div>
-        </DialogContent>
-      </Dialog>
+          <CartPanel />
+        </Drawer>
+      </MyContext.Provider>
     </>
   );
 };
