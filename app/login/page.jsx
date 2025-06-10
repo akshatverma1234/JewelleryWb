@@ -1,14 +1,26 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import TextField from "@mui/material/TextField";
 import { IoIosEye } from "react-icons/io";
 import { IoIosEyeOff } from "react-icons/io";
 import Button from "@mui/material/Button";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
+import { MyContext } from "@/context/AppContext";
 
 const Login = () => {
+  const context = useContext(MyContext);
   const [showPassword, setIsShowPassword] = useState(false);
+  const [formFields, setFormFields] = useState({
+    email: "",
+    password: "",
+  });
+  const history = useRouter();
+  const forgotPassword = () => {
+    history.push("/verify");
+    context.openAlertBox("success", "OTP Send");
+  };
 
   return (
     <section className="section !py-10">
@@ -25,6 +37,7 @@ const Login = () => {
                 label="Email Id *"
                 variant="outlined"
                 className="!w-full"
+                name="email"
               />
             </div>
             <div className="form-group w-full !mb-5 relative">
@@ -34,8 +47,10 @@ const Login = () => {
                 label="Password *"
                 variant="outlined"
                 className="!w-full"
+                name="password"
               />
               <Button
+                type="submit"
                 className="!absolute top-[10px] right-[10px] z-50 !w-[35px] !h-[35px] !min-w-[35px] !rounded-full !text-black"
                 onClick={() => setIsShowPassword(!showPassword)}
               >
@@ -46,7 +61,10 @@ const Login = () => {
                 )}
               </Button>
             </div>
-            <a className="link cursor-pointer text-[14px] font-[600]">
+            <a
+              className="link cursor-pointer text-[14px] font-[600]"
+              onClick={forgotPassword}
+            >
               Forgot Password?
             </a>
             <div className="flex items-center w-full !mt-3 !mb-3">

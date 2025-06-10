@@ -8,12 +8,8 @@ import ProductZoom from "@/components/ProductZoom/index";
 import { IoMdClose } from "react-icons/io";
 import ProductDetailsComponent from "@/components/ProductDetails/index";
 import Drawer from "@mui/material/Drawer";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import List from "@mui/material/List";
 import CartPanel from "@/components/CartPanel";
+import toast, { Toaster } from "react-hot-toast";
 
 const MyContext = createContext();
 
@@ -31,16 +27,26 @@ export const AppProvider = ({ children }) => {
   const handleCloseProductsModel = () => {
     setOpenProductModel(false);
   };
+  const openAlertBox = (status, msg) => {
+    if (status === "success") {
+      toast.success(msg);
+    }
+    if (status === "error") {
+      toast.error(msg);
+    }
+  };
 
   const values = {
     setOpenProductModel,
     setOpenCartPanel,
     toggleDrawerCart,
     openCartPanel,
+    openAlertBox,
   };
   return (
     <>
       <MyContext.Provider value={values}>
+        <Toaster position="top-right" reverseOrder={false} />
         {children}
 
         {/* Product Modal */}
