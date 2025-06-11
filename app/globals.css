@@ -22,6 +22,12 @@ body {
   color: #5c5c5c;
 }
 
+.sroll::-webkit-scrollbar {
+  width: 3px !important;
+}
+.sroll::-webkit-scrollbar-thumb {
+  background: #ccc !important;
+}
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
