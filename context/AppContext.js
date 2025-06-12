@@ -49,7 +49,6 @@ export const AppProvider = ({ children }) => {
         <Toaster position="top-right" reverseOrder={false} />
         {children}
 
-        {/* Product Modal */}
         <Dialog
           open={openProductsModel}
           onClose={handleCloseProductsModel}
