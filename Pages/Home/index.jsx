@@ -22,7 +22,7 @@ const Home = () => {
       <HomeSlider />
       <CategoriesSlider />
 
-      <section className="bg-white !py-10 !px-20">
+      <section className="bg-white !py-8 !px-20">
         <div className="container-fluid">
           <div className="flex items-center justify-between">
             <div className="leftSec">
