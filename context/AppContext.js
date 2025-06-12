@@ -19,6 +19,7 @@ export const AppProvider = ({ children }) => {
   const [maxWidth, setMaxWidth] = useState("lg");
 
   const [openCartPanel, setOpenCartPanel] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
 
   const toggleDrawerCart = (newOpen) => {
     setOpenCartPanel(newOpen);
@@ -42,6 +43,8 @@ export const AppProvider = ({ children }) => {
     toggleDrawerCart,
     openCartPanel,
     openAlertBox,
+    isLogin,
+    setIsLogin,
   };
   return (
     <>

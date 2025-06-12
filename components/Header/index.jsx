@@ -10,6 +10,8 @@ import Tooltip from "@mui/material/Tooltip";
 import Navigation from "./Navigation";
 import { useContext } from "react";
 import { MyContext } from "@/context/AppContext";
+import { FaRegUser } from "react-icons/fa";
+import Button from "@mui/material/Button";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -65,26 +67,40 @@ const Header = () => {
               </h1>
             </Link>
           </div>
-          <div className="col2 w-[45%]">
+          <div className="col2 w-[40%]">
             <Search />
           </div>
-          <div className="col3 w-[30%] flex items-center pl-7">
+          <div className="col3 w-[35%] flex items-center pl-7">
             <ul className="flex items-center gap-6 justify-end w-full">
-              <li className="list-none ">
-                <Link
-                  href="/login"
-                  className="link transition text-[18px] font-[500]"
-                >
-                  Login
-                </Link>{" "}
-                | &nbsp;
-                <Link
-                  href="/register"
-                  className="link transition text-[18px] font-[500]"
-                >
-                  Register
-                </Link>
-              </li>
+              {context.isLogin === false ? (
+                <li className="list-none ">
+                  <Link
+                    href="/login"
+                    className="link transition text-[18px] font-[500]"
+                  >
+                    Login
+                  </Link>{" "}
+                  | &nbsp;
+                  <Link
+                    href="/register"
+                    className="link transition text-[18px] font-[500]"
+                  >
+                    Register
+                  </Link>
+                </li>
+              ) : (
+                <div className="myAccoutWrap flex items-center gap-3">
+                  <Button className="!w-[40px] !h-[40px] !min-w-[40px] !rounded-full !bg-white">
+                    <FaRegUser className="text-[16px] text-[rgba(0,0,0,0.7)]" />
+                  </Button>
+
+                  <div className="info flex flex-col">
+                    <h4 className="text-[14px] !mb-0">Akshat</h4>
+                    <span className="text-[13px]">akshat@gmail.com</span>
+                  </div>
+                </div>
+              )}
+
               <li>
                 <Tooltip title="Wishlist">
                   <IconButton aria-label="cart" className="!p-0">

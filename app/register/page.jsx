@@ -72,7 +72,7 @@ const Register = () => {
               Or continue with social account
             </p>
             <Button className="flex gap-3 !w-full !bg-[#eaeaea] !text-black">
-              <FcGoogle className="text-[20px]" /> Login with Google
+              <FcGoogle className="text-[20px]" /> Signup with Google
             </Button>
           </form>
         </div>

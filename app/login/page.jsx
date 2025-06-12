@@ -43,8 +43,8 @@ const Login = () => {
             <div className="form-group w-full !mb-5 relative">
               <TextField
                 type={showPassword === false ? "password" : "text"}
-                id="password"
-                label="Password *"
+                id="outlined-basic"
+                label="Password"
                 variant="outlined"
                 className="!w-full"
                 name="password"
@@ -73,7 +73,7 @@ const Login = () => {
             <p className="text-center">
               Not Registered?{" "}
               <Link
-                href="/signup"
+                href="/register"
                 className="link text-[14px] font-[600] text-amber-600"
               >
                 Sign Up
