@@ -193,6 +193,10 @@ header .topstrip {
   font-size: 16px !important;
   padding: 7px 20px !important;
 }
+.btn-sm {
+  font-size: 12px !important;
+  padding: 5px 20px !important;
+}
 
 footer form input::placeholder {
   font-size: 15px;
