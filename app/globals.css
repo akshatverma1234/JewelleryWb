@@ -169,14 +169,31 @@ header .topstrip {
   color: white !important;
   font-weight: 500 !important;
   font-size: 16px !important;
-}
-.btn-lg {
-  font-size: 16px !important;
   padding: 7px 20px !important;
 }
 .btn-org:hover {
   background-color: rgb(23, 23, 23) !important;
 }
+
+.btn-org.btn-border {
+  background: none !important;
+  color: #ff5252 !important;
+  border: 1px solid #ff5252 !important;
+  font-weight: 500 !important;
+  font-size: 16px !important;
+  padding: 7px 20px !important;
+}
+.btn-org.btn-border:hover {
+  background-color: rgb(23, 23, 23) !important;
+  color: white !important;
+  border: 1px solid #ff5252 !important;
+}
+
+.btn-lg {
+  font-size: 16px !important;
+  padding: 7px 20px !important;
+}
+
 footer form input::placeholder {
   font-size: 15px;
 }
@@ -262,13 +279,44 @@ input[type="number"]::-webkit-outer-spin-button {
   width: 400px;
   overflow: hidden;
 }
-/* Add this to your global CSS or module.css */
+
 .MuiInput-underline::before,
 .MuiInput-underline::after {
-  border-bottom: none !important; /* Remove underline */
+  border-bottom: none !important;
 }
 input.MuiInputBase-input {
   border-bottom: 1px solid black !important;
   box-shadow: none !important;
   outline: none !important;
+}
+#account-menu .MuiPaper-root {
+  width: 200px !important;
+}
+.SidebarBtn {
+  display: flex !important;
+  width: 100% !important;
+  text-align: left !important;
+  padding: 0.5rem 1.25rem !important;
+  justify-content: flex-start !important;
+  text-transform: capitalize !important;
+  border-radius: 0 !important;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.TabHighlight {
+  background-color: #f3f3f3;
+}
+
+.TabHighlight::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background-color: #d32f2f;
+  border-radius: 0 4px 4px 0;
 }
