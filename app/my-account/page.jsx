@@ -42,7 +42,7 @@ const MyAccount = () => {
                 <Link href="/my-account">
                   <Button
                     component="a"
-                    className={`SidebarBtn ${
+                    className={`SidebarBtn !text-black ${
                       isActive("/my-account") ? "TabHighlight" : ""
                     }`}
                   >
@@ -62,7 +62,7 @@ const MyAccount = () => {
                 <Link href="/my-list">
                   <Button
                     component="a"
-                    className={`SidebarBtn ${
+                    className={`SidebarBtn !text-black ${
                       isActive("/my-list") ? "TabHighlight" : ""
                     }`}
                   >
@@ -82,7 +82,7 @@ const MyAccount = () => {
                 <Link href="/my-orders">
                   <Button
                     component="a"
-                    className={`SidebarBtn ${
+                    className={`SidebarBtn !text-black ${
                       isActive("/my-orders") ? "TabHighlight" : ""
                     }`}
                   >
@@ -102,7 +102,7 @@ const MyAccount = () => {
                 <Link href="/my-logout">
                   <Button
                     component="a"
-                    className={`SidebarBtn ${
+                    className={`SidebarBtn !text-black ${
                       isActive("/logout") ? "TabHighlight" : ""
                     }`}
                   >
