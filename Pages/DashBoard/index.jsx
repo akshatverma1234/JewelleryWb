@@ -86,7 +86,7 @@ const DashBoard = () => {
               </tr>
             </thead>
             <tbody>
-              <tr className="!bg-white !border-b  dark:!border-gray-700 !text-gray-800">
+              <tr className="!bg-white !border-b  !border-[rgba(0,0,0,0.2)] !text-gray-800">
                 <td class="!px-6 !py-4 font-[500] whitespace-nowrap">
                   <Button
                     className="!w-[35px] !h-[35px] !min-w-[35px] !rounded-full bg-[#f1f1f1]"
@@ -173,7 +173,7 @@ const DashBoard = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr className="!bg-white !border-b dark:!border-gray-700 !text-gray-800">
+                          <tr className="!bg-white !border-b !border-[rgba(0,0,0,0.2)] !text-gray-800">
                             <td className="!px-6 !py-4 font-[500] whitespace-nowrap">
                               <span className="text-gray-600">
                                 65654554784444485
@@ -208,7 +208,7 @@ const DashBoard = () => {
                 </td>
               </tr>
 
-              <tr className="!bg-white !border-b  dark:!border-gray-700 !text-gray-800">
+              <tr className="!bg-white !border-b  !border-[rgba(0,0,0,0.2)] !text-gray-800">
                 <td class="!px-6 !py-4 font-[500] whitespace-nowrap">
                   <Button
                     className="!w-[35px] !h-[35px] !min-w-[35px] !rounded-full bg-[#f1f1f1]"
