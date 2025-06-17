@@ -1,9 +1,28 @@
 @import "tailwindcss";
 @import url("https://fonts.googleapis.com/css2?family=Ancizar+Sans:ital,wght@0,100..1000;1,100..1000&family=Merriweather:wght@700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Mukta:wght@600&family=Noto+Serif:ital,wght@0,600;1,600&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Oswald&family=Rubik+Lines&family=Sevillana&family=Tiro+Devanagari+Hindi:ital@1&family=Work+Sans:wght@800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Ancizar+Sans:ital,wght@0,100..1000;1,100..1000&family=Merriweather:wght@700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Mukta:wght@600&family=Noto+Serif:ital,wght@0,600;1,600&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Oswald&family=Rubik+Lines&family=Sevillana&family=Tiro+Devanagari+Hindi:ital@1&family=Work+Sans:wght@800&display=swap");
 
 body {
-  font-family: "Nunito", sans-serif;
+  font-family: "Merriweather", serif;
+  background: #f1f1f1;
 }
 .MuiBadge-badge {
   background: rgb(203, 85, 85) !important;
+}
+
+.ReactCollapse--collapse {
+  transition: height 500ms;
+}
+::-webkit-scrollbar {
+  width: 10px !important;
+  height: 10px !important;
+}
+::-webkit-scrollbar-thumb {
+  background: #ccc !important;
+}
+.btn-primary {
+  color: #3872fa;
+}
+.btn-background {
+  background-color: #3872fa;
 }
