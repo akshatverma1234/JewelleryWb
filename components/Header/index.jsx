@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button } from "@mui/material";
 import { HiMenuAlt2 } from "react-icons/hi";
 import Badge, { BadgeProps } from "@mui/material/Badge";
@@ -11,6 +11,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 import { FaRegUser } from "react-icons/fa6";
 import { IoIosLogOut } from "react-icons/io";
+import { MyContext } from "@/context/AppContext";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -30,10 +31,19 @@ const Header = () => {
   const handleCloseMyAccount = () => {
     setAnchorMyAccount(null);
   };
+
+  const context = useContext(MyContext);
   return (
-    <header className="w-full h-[auto] py-2 pl-74 pr-7 bg-white shadow-md flex items-center justify-between">
+    <header
+      className={`w-full h-[auto] py-2 ${
+        context.isOpenSideBar === true ? "pl-74" : "pl-5"
+      } pr-7 bg-white shadow-md flex items-center justify-between transition-all`}
+    >
       <div className="part1">
-        <Button className="!w-[40px] !h-[40px] !min-w-[40px] !rounded-full !text-black">
+        <Button
+          className="!w-[40px] !h-[40px] !min-w-[40px] !rounded-full !text-black"
+          onClick={() => context.setOpenSideBar(!context.isOpenSideBar)}
+        >
           <HiMenuAlt2 className="text-black text-[22px]" />
         </Button>
       </div>

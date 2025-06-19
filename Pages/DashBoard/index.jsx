@@ -6,7 +6,6 @@ import { FaAngleUp } from "react-icons/fa6";
 import { FaAngleDown } from "react-icons/fa6";
 import Badge from "@/components/Badge";
 import React, { useState } from "react";
-import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -594,15 +593,15 @@ const DashBoard = () => {
             </TableBody>
           </Table>
         </TableContainer>
-        {/* <TablePagination
+        <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={rows.length}
+          count={5}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
-        /> */}
+        />
       </div>
     </>
   );
