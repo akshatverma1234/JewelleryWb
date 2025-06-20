@@ -5,9 +5,12 @@ const MyContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const [isOpenSideBar, setOpenSideBar] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
   const values = {
     isOpenSideBar,
     setOpenSideBar,
+    isLogin,
+    setIsLogin,
   };
   return (
     <>
