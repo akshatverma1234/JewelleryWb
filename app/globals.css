@@ -30,3 +30,11 @@ th.MuiTableCell-root {
   @apply bg-[#f1f1f1]
   py-1;
 }
+
+.btn {
+  padding: 8px 20px !important;
+}
+.btn-sm {
+  padding: 6px 20px !important;
+  font-size: 13px !important;
+}

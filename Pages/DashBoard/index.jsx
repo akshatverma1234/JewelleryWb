@@ -2,10 +2,9 @@
 import DashBoardBoxes from "@/components/DashBoardBoxes";
 import { Button, Tooltip } from "@mui/material";
 import { FaPlus } from "react-icons/fa6";
-import { FaAngleUp } from "react-icons/fa6";
 import { FaAngleDown } from "react-icons/fa6";
 import Badge from "@/components/Badge";
-import React, { useState } from "react";
+import React, { useState, PureComponent } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -19,6 +18,19 @@ import Progress from "@/components/ProgressBar";
 import { LuTrash2 } from "react-icons/lu";
 import { FaRegEye } from "react-icons/fa";
 import { MdOutlineEdit } from "react-icons/md";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import { CiExport } from "react-icons/ci";
+import { MdOutlineAdd } from "react-icons/md";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
 const columns = [
   { id: "products", label: "Product", minWidth: 150 },
@@ -54,6 +66,12 @@ const DashBoard = () => {
   const [isOpenProducts, setOpenProducts] = useState(null);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const [categoryFilterValue, setCategoryFilterValue] = useState("");
+
+  const handleChangeCategory = (event) => {
+    setCategoryFilterValue(event.target.value);
+  };
 
   const isShowOrderProducts = (idx) => {
     if (isOpenProducts === idx) {
@@ -447,6 +465,40 @@ const DashBoard = () => {
         <div className="flex items-center justify-between px-5 py-5">
           <h2 className="text-[18px] font-[600]">Products</h2>
         </div>
+        <div className="flex items-center w-full pl-5 mb-2 justify-between pr-5">
+          <div className="col w-[20%]">
+            <h4 className="font-[600] text-[14px] mb-2 uppercase">
+              Category By
+            </h4>
+            <Select
+              className="w-full"
+              size="small"
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              value={categoryFilterValue}
+              onChange={handleChangeCategory}
+              label="Category"
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value={10}>Men</MenuItem>
+              <MenuItem value={20}>Women</MenuItem>
+              <MenuItem value={30}>Kids</MenuItem>
+            </Select>
+          </div>
+          <div className="col w-[25%] ml-auto flex items-center justify-end gap-3">
+            <Button className="!btn !bg-green-500 !text-white flex items-center gap-1">
+              <CiExport className="text-[18px]" />
+              Export
+            </Button>
+            <Button className="!bg-blue-500  !btn-sm !btn !text-white flex items-center gap-1">
+              <MdOutlineAdd className="text-[18px]" />
+              Add Product
+            </Button>
+          </div>
+        </div>
+
         <TableContainer sx={{ maxHeight: 440 }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
