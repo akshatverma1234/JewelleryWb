@@ -17,7 +17,7 @@ import { FaRegEyeSlash } from "react-icons/fa";
 import Link from "next/link";
 import React, { useState } from "react";
 
-const Login = () => {
+const SignUp = () => {
   const [loadingGoogle, setLoadingGoogle] = useState(false);
   const [loadingFb, setLoadingFb] = useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
@@ -47,8 +47,7 @@ const Login = () => {
         </Link>
         <div className="flex items-center gap-4">
           <Button className="!rounded-full !text-[rgba(0,0,0,0.8)] !px-5 flex gap-1">
-            <CgLogIn className="text-[18px]" />
-            Login
+            <CgLogIn className="text-[18px]" /> Login
           </Button>
           <Button className="!rounded-full !text-[rgba(0,0,0,0.8)] !px-5 flex gap-1">
             <FaRegUser className="text-[18px]" />
@@ -65,8 +64,9 @@ const Login = () => {
           <img src="./icon.png" className="m-auto w-18" />
         </div>
         <h1 className="text-center text-[35px] font-[800] mt-4">
-          Welcome Back! <br />
-          Sign in with your credentials
+          Join us today! Get special
+          <br />
+          benefits and stay up-to-date.
         </h1>
         <div className="flex items-center justify-center w-full mt-5 gap-4">
           <Button
@@ -101,6 +101,14 @@ const Login = () => {
         </div>
 
         <form className="w-full px-8 ">
+          <div className="form-group mb-4 w-full flex items-center justify-center">
+            <TextField
+              id="outlined-basic"
+              label="Full Name"
+              variant="outlined"
+              className="w-[100%] !mt-3"
+            />
+          </div>
           <div className="form-group mb-4 w-full flex items-center justify-center">
             <TextField
               id="outlined-basic"
@@ -149,11 +157,11 @@ const Login = () => {
               Forgot Password?
             </Link>
           </div>
-          <Button className="!bg-blue-600 !text-white w-full">Sign In</Button>
+          <Button className="!bg-blue-600 !text-white w-full">Sign Up</Button>
         </form>
       </div>
     </section>
   );
 };
 
-export default Login;
+export default SignUp;

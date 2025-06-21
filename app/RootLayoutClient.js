@@ -5,7 +5,7 @@ import { AppProvider } from "../context/AppContext";
 
 export default function RootLayoutClient({ children }) {
   const pathname = usePathname();
-  const hideHeaderRoutes = ["/login"];
+  const hideHeaderRoutes = ["/login", "/signup"];
   const shouldHideHeader = hideHeaderRoutes.includes(pathname);
 
   return (

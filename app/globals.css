@@ -38,3 +38,12 @@ th.MuiTableCell-root {
   padding: 6px 20px !important;
   font-size: 13px !important;
 }
+.MuiButton-icon svg {
+  font-size: 30px !important;
+}
+.MuiButtonBase-root {
+  background: none !important;
+}
+.css-rizt0-MuiTypography-root {
+  font-size: 14px !important;
+}
