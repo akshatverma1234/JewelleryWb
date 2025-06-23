@@ -23,7 +23,8 @@ import SearchBox from "@/components/SearchBox";
 import { MyContext } from "@/context/AppContext";
 
 const columns = [
-  { id: "image", label: "Image", minWidth: 250 },
+  { id: "image", label: "Image", minWidth: 150 },
+  { id: "catName", label: "Category Name", minWidth: 150 },
   { id: "action", label: "Action", minWidth: 100 },
 ];
 
@@ -119,7 +120,7 @@ const CategoryList = () => {
                     </div>
                   </div>
                 </TableCell>
-
+                <TableCell width={100}>Rings</TableCell>
                 <TableCell width={100}>
                   <div className="flex items-center gap-1">
                     <Tooltip title="Edit Product" placement="top" />

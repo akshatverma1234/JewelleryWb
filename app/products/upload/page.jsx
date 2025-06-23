@@ -5,7 +5,7 @@ import Rating from "@mui/material/Rating";
 import UploadBox from "@/components/UploadBox";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
-import { IoClose } from "react-icons/io5";
+import { IoClose, IoCloudUploadSharp } from "react-icons/io5";
 import { Button } from "@mui/material";
 
 const ProductAdd = () => {
@@ -165,7 +165,7 @@ const ProductAdd = () => {
                     alt={"image"}
                     effect="blur"
                     wrapperProps={{
-                      style: { transitionDelay: "1s" },
+                      style: { transitionDelay: "0.5s" },
                     }}
                     src={
                       "https://img.freepik.com/free-photo/young-woman-model-with-red-lips_158538-10276.jpg?ga=GA1.1.457199218.1719842889&semt=ais_hybrid&w=740"
@@ -188,7 +188,7 @@ const ProductAdd = () => {
                     alt={"image"}
                     effect="blur"
                     wrapperProps={{
-                      style: { transitionDelay: "1s" },
+                      style: { transitionDelay: "0.5s" },
                     }}
                     src={
                       "https://img.freepik.com/free-photo/young-woman-model-with-red-lips_158538-10276.jpg?ga=GA1.1.457199218.1719842889&semt=ais_hybrid&w=740"
@@ -211,7 +211,7 @@ const ProductAdd = () => {
                     alt={"image"}
                     effect="blur"
                     wrapperProps={{
-                      style: { transitionDelay: "1s" },
+                      style: { transitionDelay: "0.5s" },
                     }}
                     src={
                       "https://img.freepik.com/free-photo/young-woman-model-with-red-lips_158538-10276.jpg?ga=GA1.1.457199218.1719842889&semt=ais_hybrid&w=740"
@@ -234,7 +234,7 @@ const ProductAdd = () => {
                     alt={"image"}
                     effect="blur"
                     wrapperProps={{
-                      style: { transitionDelay: "1s" },
+                      style: { transitionDelay: "0.5s" },
                     }}
                     src={
                       "https://img.freepik.com/free-photo/young-woman-model-with-red-lips_158538-10276.jpg?ga=GA1.1.457199218.1719842889&semt=ais_hybrid&w=740"

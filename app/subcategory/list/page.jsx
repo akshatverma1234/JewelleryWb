@@ -13,18 +13,17 @@ import Progress from "@/components/ProgressBar";
 import { LuTrash2 } from "react-icons/lu";
 import { FaRegEye } from "react-icons/fa";
 import { MdOutlineEdit } from "react-icons/md";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
+import Chip from "@mui/material/Chip";
 import { CiExport } from "react-icons/ci";
 import { MdOutlineAdd } from "react-icons/md";
 import React, { useContext, useState } from "react";
 import { Tooltip } from "@mui/material";
-import SearchBox from "@/components/SearchBox";
 import { MyContext } from "@/context/AppContext";
 
 const columns = [
   { id: "image", label: "Category Image", minWidth: 250 },
   { id: "catName", label: "Category Name", minWidth: 250 },
+  { id: "subCatName", label: "Sub Category Name", minWidth: 400 },
   { id: "action", label: "Action", minWidth: 100 },
 ];
 
@@ -121,49 +120,14 @@ const SubCategoryList = () => {
                   </div>
                 </TableCell>
                 <TableCell width={60}>
-                  <span className="inline-block rounded-md text-[14px] p-1 bg-gray-200">
-                    Men
-                  </span>
-                </TableCell>
-
-                <TableCell width={100}>
-                  <div className="flex items-center gap-1">
-                    <Tooltip title="Edit Product" placement="top" />
-                    <Button className="!w-[35px] !h-[35px] !border-b !bg-[#f1f1f1] !border-[rgba(0,0,0,0.4)] !rounded-full hover:!bg-white !min-w-[35px]">
-                      <MdOutlineEdit className="text-[rgba(0,0,0,0.7)] text-[18px]" />
-                    </Button>
-                    <Tooltip title="View Product Details" placement="top" />
-                    <Button className="!w-[35px] !h-[35px] !border-b !bg-[#f1f1f1] !border-[rgba(0,0,0,0.4)] !rounded-full hover:!bg-white !min-w-[35px]">
-                      <FaRegEye className="text-[rgba(0,0,0,0.7)] text-[18px]" />
-                    </Button>
-                    <Tooltip title="Remove Product" placement="top" />
-                    <Button className="!w-[35px] !h-[35px] !border-b !bg-[#f1f1f1]  !border-[rgba(0,0,0,0.4)] !rounded-full hover:!bg-white !min-w-[35px]">
-                      <LuTrash2 className="text-[rgba(0,0,0,0.7)] text-[18px]" />
-                    </Button>
-                  </div>
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>
-                  <Checkbox {...label} size="small" />
-                </TableCell>
-                <TableCell width={100}>
-                  <div className="flex items-center gap-4 w-[80px]">
-                    <div className="w-full rounded-md overflow-hidden group">
-                      <Link href="/product/2234">
-                        <img
-                          src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcS3s947b4cD_X0oAZIPBs5W_cYavcsTCLxjYYEpB2XF0AKveMETWxJYsx2D1sSdWQbY2Z1xzKwXUb5ux8FE0foCuQyqCIV2wn6q6b38LkAwRGjNoZz7eiCLV40"
-                          alt="Woman Beauty with Jewelry"
-                          className="w-full h-full group-hover:scale-105 transition-all"
-                        />
-                      </Link>
-                    </div>
-                  </div>
+                  <Chip label="Men" />
                 </TableCell>
                 <TableCell width={60}>
-                  <span className="inline-block rounded-md text-[14px] p-1 bg-gray-200">
-                    Men
-                  </span>
+                  <div className="flex items-center gap-3">
+                    <Chip label="Men" color="primary" />
+                    <Chip label="Women" color="primary" />
+                    <Chip label="Kids" color="primary" />
+                  </div>
                 </TableCell>
 
                 <TableCell width={100}>
@@ -171,10 +135,6 @@ const SubCategoryList = () => {
                     <Tooltip title="Edit Product" placement="top" />
                     <Button className="!w-[35px] !h-[35px] !border-b !bg-[#f1f1f1] !border-[rgba(0,0,0,0.4)] !rounded-full hover:!bg-white !min-w-[35px]">
                       <MdOutlineEdit className="text-[rgba(0,0,0,0.7)] text-[18px]" />
-                    </Button>
-                    <Tooltip title="View Product Details" placement="top" />
-                    <Button className="!w-[35px] !h-[35px] !border-b !bg-[#f1f1f1] !border-[rgba(0,0,0,0.4)] !rounded-full hover:!bg-white !min-w-[35px]">
-                      <FaRegEye className="text-[rgba(0,0,0,0.7)] text-[18px]" />
                     </Button>
                     <Tooltip title="Remove Product" placement="top" />
                     <Button className="!w-[35px] !h-[35px] !border-b !bg-[#f1f1f1]  !border-[rgba(0,0,0,0.4)] !rounded-full hover:!bg-white !min-w-[35px]">
