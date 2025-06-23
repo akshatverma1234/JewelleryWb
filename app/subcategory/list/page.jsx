@@ -127,7 +127,6 @@ const SubCategoryList = () => {
                     <Chip label="Men" color="primary" />
                     <Chip label="Women" color="primary" />
                     <Chip label="Kids" color="primary" />
-                    <Chip label="Kids" color="primary" />
                   </div>
                 </TableCell>
 
