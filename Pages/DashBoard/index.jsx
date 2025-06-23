@@ -593,7 +593,7 @@ const DashBoard = () => {
                     <div className="w-[65px] h-[65px] rounded-md overflow-hidden group">
                       <Link href="/product/2234">
                         <img
-                          src="https://media.istockphoto.com/id/1427466087/photo/woman-beauty-with-smooth-skin-make-up-and-golden-jewelry-beautiful-girl-with-perfect-lips-and.jpg?s=612x612&w=0&k=20&c=B3ngEKRxzyKWlHX3dFZT8IiwTotalSalesPo3YPsWUDzz2TCUzY="
+                          src="https://img.freepik.com/free-photo/young-woman-model-with-red-lips_158538-10276.jpg?ga=GA1.1.457199218.1719842889&semt=ais_hybrid&w=740"
                           alt="Woman Beauty with Jewelry"
                           className="w-full h-full group-hover:scale-105 transition-all"
                         />
@@ -655,7 +655,7 @@ const DashBoard = () => {
                     <div className="w-[65px] h-[65px] rounded-md overflow-hidden group">
                       <Link href="/product/2234">
                         <img
-                          src="https://media.istockphoto.com/id/1427466087/photo/woman-beauty-with-smooth-skin-make-up-and-golden-jewelry-beautiful-girl-with-perfect-lips-and.jpg?s=612x612&w=0&k=20&c=B3ngEKRxzyKWlHX3dFZT8IiwTotalSalesPo3YPsWUDzz2TCUzY="
+                          src="https://img.freepik.com/free-photo/young-woman-model-with-red-lips_158538-10276.jpg?ga=GA1.1.457199218.1719842889&semt=ais_hybrid&w=740"
                           alt="Woman Beauty with Jewelry"
                           className="w-full h-full group-hover:scale-105 transition-all"
                         />

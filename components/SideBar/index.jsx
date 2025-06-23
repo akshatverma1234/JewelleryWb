@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@mui/material";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaRegImages } from "react-icons/fa6";
 import { MdDashboard } from "react-icons/md";
 import { FaUsers } from "react-icons/fa";
@@ -11,6 +11,7 @@ import { AiOutlineLogout } from "react-icons/ai";
 import { IoBagCheckOutline } from "react-icons/io5";
 import { FaAngleDown } from "react-icons/fa6";
 import { Collapse } from "react-collapse";
+import { MyContext } from "@/context/AppContext";
 
 const SideBar = () => {
   const [subMenuIdx, setSubmenuIdx] = useState(null);
@@ -21,6 +22,7 @@ const SideBar = () => {
       setSubmenuIdx(idx);
     }
   };
+  const context = useContext(MyContext);
   return (
     <div className="sideBar fixed top-0 left-0 bg-white w-[18%] h-full border-r border-[rgba(0,0,0,0.1)] py-2 px-4">
       <div className="py-2 w-full">
@@ -59,13 +61,23 @@ const SideBar = () => {
           <Collapse isOpened={subMenuIdx === 1 ? true : false}>
             <ul className="w-full">
               <li className="w-full">
-                <Button className="!text-[rgba(0,0,0,0.8)] !capitalize !justify-start !w-full !text-[13px] !font-[500] !pl-9 flex gap-3">
-                  <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
-                  Home Banner list
-                </Button>
+                <Link href="/homeSlider/list">
+                  <Button className="!text-[rgba(0,0,0,0.8)] !capitalize !justify-start !w-full !text-[13px] !font-[500] !pl-9 flex gap-3">
+                    <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
+                    Home Banner list
+                  </Button>
+                </Link>
               </li>
               <li className="w-full">
-                <Button className="!text-[rgba(0,0,0,0.8)] !capitalize !justify-start !w-full !text-[13px] !font-[500] !pl-9 flex gap-3">
+                <Button
+                  className="!text-[rgba(0,0,0,0.8)] !capitalize !justify-start !w-full !text-[13px] !font-[500] !pl-9 flex gap-3"
+                  onClick={() =>
+                    context.setOpenPanel({
+                      open: true,
+                      model: "Add Home Slide",
+                    })
+                  }
+                >
                   <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
                   Add Home Banner Slide
                 </Button>
@@ -107,12 +119,18 @@ const SideBar = () => {
                 </Link>
               </li>
               <li className="w-full">
-                <Link href="/product/upload">
-                  <Button className="!text-[rgba(0,0,0,0.8)] !capitalize !justify-start !w-full !text-[13px] !font-[500] !pl-9 flex gap-3">
-                    <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
-                    Product Upload
-                  </Button>
-                </Link>
+                <Button
+                  className="!text-[rgba(0,0,0,0.8)] !capitalize !justify-start !w-full !text-[13px] !font-[500] !pl-9 flex gap-3"
+                  onClick={() =>
+                    context.setOpenPanel({
+                      open: true,
+                      model: "Add Product",
+                    })
+                  }
+                >
+                  <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
+                  Product Upload
+                </Button>
               </li>
             </ul>
           </Collapse>
@@ -135,7 +153,7 @@ const SideBar = () => {
           <Collapse isOpened={subMenuIdx === 3 ? true : false}>
             <ul className="w-full">
               <li className="w-full">
-                <Link href="/categories">
+                <Link href="/category/list">
                   <Button className="!text-[rgba(0,0,0,0.8)] !capitalize !justify-start !w-full !text-[13px] !font-[500] !pl-9 flex gap-3">
                     <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
                     Category list
@@ -143,12 +161,18 @@ const SideBar = () => {
                 </Link>
               </li>
               <li className="w-full">
-                <Link href="/category/add">
-                  <Button className="!text-[rgba(0,0,0,0.8)] !capitalize !justify-start !w-full !text-[13px] !font-[500] !pl-9 flex gap-3">
-                    <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
-                    Add category
-                  </Button>
-                </Link>
+                <Button
+                  className="!text-[rgba(0,0,0,0.8)] !capitalize !justify-start !w-full !text-[13px] !font-[500] !pl-9 flex gap-3"
+                  onClick={() =>
+                    context.setOpenPanel({
+                      open: true,
+                      model: "Add New Category",
+                    })
+                  }
+                >
+                  <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
+                  Add category
+                </Button>
               </li>
               <li className="w-full">
                 <Link href="/category/subCat">

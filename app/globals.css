@@ -47,3 +47,16 @@ th.MuiTableCell-root {
 .css-rizt0-MuiTypography-root {
   font-size: 14px !important;
 }
+.MuiAppBar-colorPrimary {
+  background: #e7e7e7 !important;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+.MuiSelect-select {
+  background: #fff !important;
+}

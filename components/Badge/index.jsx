@@ -7,7 +7,7 @@ const Badge = (props) => {
         props.status === "pending" && "bg-amber-600 text-white"
       } ${props.status === "confirm" && "bg-green-500 text-white"} ${
         props.status === "delivered" && "bg-green-700 text-white"
-      }`}
+      }${props.status === "default" && "bg-blue-700 text-white"}`}
     >
       {props.status}
     </span>
