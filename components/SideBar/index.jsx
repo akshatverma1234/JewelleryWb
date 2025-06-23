@@ -175,7 +175,7 @@ const SideBar = () => {
                 </Button>
               </li>
               <li className="w-full">
-                <Link href="/category/subCat">
+                <Link href="/subcategory/list">
                   <Button className="!text-[rgba(0,0,0,0.8)] !capitalize !justify-start !w-full !text-[13px] !font-[500] !pl-9 flex gap-3">
                     <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
                     Sub Category List
@@ -183,12 +183,18 @@ const SideBar = () => {
                 </Link>
               </li>
               <li className="w-full">
-                <Link href="/category/subCat/add">
-                  <Button className="!text-[rgba(0,0,0,0.8)] !capitalize !justify-start !w-full !text-[13px] !font-[500] !pl-9 flex gap-3">
-                    <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
-                    Add sub category
-                  </Button>
-                </Link>
+                <Button
+                  className="!text-[rgba(0,0,0,0.8)] !capitalize !justify-start !w-full !text-[13px] !font-[500] !pl-9 flex gap-3"
+                  onClick={() =>
+                    context.setOpenPanel({
+                      open: true,
+                      model: "Add New Sub Category",
+                    })
+                  }
+                >
+                  <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
+                  Add sub category
+                </Button>
               </li>
             </ul>
           </Collapse>
