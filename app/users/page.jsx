@@ -13,6 +13,7 @@ import { MdOutlinePhone } from "react-icons/md";
 import React, { useContext, useState } from "react";
 import SearchBox from "@/components/SearchBox";
 import { MyContext } from "@/context/AppContext";
+import { SlCalender } from "react-icons/sl";
 
 const columns = [
   { id: "userImg", label: "User Image", minWidth: 80 },
@@ -25,6 +26,11 @@ const columns = [
   {
     id: "userPhone",
     label: "User Phone No",
+    minWidth: 130,
+  },
+  {
+    id: "createdDate",
+    label: "Created",
     minWidth: 130,
   },
 ];
@@ -95,7 +101,7 @@ const Users = () => {
                 </TableCell>
                 <TableCell style={{ minWidth: columns.minWidth }}>
                   <div className="flex items-center gap-4 w-[70px]">
-                    <div className="w-[65px] h-[65px] rounded-md overflow-hidden group">
+                    <div className="w-[50px] h-[50px] rounded-md overflow-hidden group">
                       <Link href="/product/2234">
                         <img
                           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6_3IZ2cV1sHEIKmUSApjI9pyGnmX7B-C5eg&s"
@@ -118,6 +124,12 @@ const Users = () => {
                   <span className="flex items-center gap-2">
                     <MdOutlinePhone />
                     +91-7668137019
+                  </span>
+                </TableCell>
+                <TableCell>
+                  <span className="flex items-center gap-2">
+                    <SlCalender />
+                    24-07-2025
                   </span>
                 </TableCell>
               </TableRow>
@@ -127,7 +139,7 @@ const Users = () => {
                 </TableCell>
                 <TableCell style={{ minWidth: columns.minWidth }}>
                   <div className="flex items-center gap-4 w-[70px]">
-                    <div className="w-[65px] h-[65px] rounded-md overflow-hidden group">
+                    <div className="w-[50px] h-[50px] rounded-md overflow-hidden group">
                       <Link href="/product/2234">
                         <img
                           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6_3IZ2cV1sHEIKmUSApjI9pyGnmX7B-C5eg&s"
@@ -150,6 +162,12 @@ const Users = () => {
                   <span className="flex items-center gap-2">
                     <MdOutlinePhone />
                     +91-7668137019
+                  </span>
+                </TableCell>
+                <TableCell>
+                  <span className="flex items-center gap-2">
+                    <SlCalender />
+                    24-07-2025
                   </span>
                 </TableCell>
               </TableRow>
@@ -159,7 +177,7 @@ const Users = () => {
                 </TableCell>
                 <TableCell style={{ minWidth: columns.minWidth }}>
                   <div className="flex items-center gap-4 w-[70px]">
-                    <div className="w-[65px] h-[65px] rounded-md overflow-hidden group">
+                    <div className="w-[50px] h-[50px] rounded-md overflow-hidden group">
                       <Link href="/product/2234">
                         <img
                           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6_3IZ2cV1sHEIKmUSApjI9pyGnmX7B-C5eg&s"
@@ -182,6 +200,12 @@ const Users = () => {
                   <span className="flex items-center gap-2">
                     <MdOutlinePhone />
                     +91-7668137019
+                  </span>
+                </TableCell>
+                <TableCell>
+                  <span className="flex items-center gap-2">
+                    <SlCalender />
+                    24-07-2025
                   </span>
                 </TableCell>
               </TableRow>
@@ -191,7 +215,7 @@ const Users = () => {
                 </TableCell>
                 <TableCell style={{ minWidth: columns.minWidth }}>
                   <div className="flex items-center gap-4 w-[70px]">
-                    <div className="w-[65px] h-[65px] rounded-md overflow-hidden group">
+                    <div className="w-[50px] h-[50px] rounded-md overflow-hidden group">
                       <Link href="/product/2234">
                         <img
                           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6_3IZ2cV1sHEIKmUSApjI9pyGnmX7B-C5eg&s"
@@ -214,6 +238,12 @@ const Users = () => {
                   <span className="flex items-center gap-2">
                     <MdOutlinePhone />
                     +91-7668137019
+                  </span>
+                </TableCell>
+                <TableCell>
+                  <span className="flex items-center gap-2">
+                    <SlCalender />
+                    24-07-2025
                   </span>
                 </TableCell>
               </TableRow>

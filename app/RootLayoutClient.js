@@ -9,7 +9,14 @@ function InnerLayout({ children }) {
   const pathname = usePathname();
   const context = useContext(MyContext);
 
-  const hideLayoutRoutes = ["/login", "/signup", "/products/upload"];
+  const hideLayoutRoutes = [
+    "/login",
+    "/signup",
+    "/products/upload",
+    "/forgot-password",
+    "/verify-account",
+    "/change-password",
+  ];
   const shouldHideLayout = hideLayoutRoutes.includes(pathname);
 
   if (shouldHideLayout) {
