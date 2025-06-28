@@ -1,3 +1,5 @@
+import sendEmailFun from "../config/sendEmail";
+
 const UserModel = require("../model/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -36,7 +38,7 @@ export async function registerUserController(req, res) {
 
     await user.save();
 
-    const verifyEmail = await sendEmail({
+    const verifyEmail = await sendEmailFun({
       sendTo: email,
       subject: "Verify Email",
       html: "",
