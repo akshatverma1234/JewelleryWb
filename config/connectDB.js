@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import dotenv from "dotenv";
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
 dotenv.config();
 if (!process.env.MONGODB_URI) {
   throw new Error("Please provide MONGODB URI in the .env file");
@@ -13,4 +13,4 @@ async function connectDB() {
     process.exit(1);
   }
 }
-export default connectDB;
+module.exports = connectDB;

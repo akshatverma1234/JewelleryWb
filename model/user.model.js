@@ -54,13 +54,11 @@ const userSchema = mongoose.Schema(
         ref: "order",
       },
     ],
-    forgot_password_otp: {
+    otp: {
       type: String,
-      default: null,
     },
-    forgot_password_expiry: {
+    optExpires: {
       type: Date,
-      default: "",
     },
     role: {
       type: String,
@@ -71,4 +69,5 @@ const userSchema = mongoose.Schema(
   { timestamps: true }
 );
 const UserModel = mongoose.model("User", userSchema);
-export default UserModel;
+
+module.exports = UserModel;

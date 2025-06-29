@@ -1,9 +1,8 @@
 const nodemailer = require("nodemailer");
-const http = require("http");
 
 const transporter = nodemailer.createTransport({
-  http: "smtp.gmail.com",
-  port: 445,
+  host: "smtp.gmail.com",
+  port: 465, // ✅ Secure SMTP port
   secure: true,
   auth: {
     user: process.env.EMAIL,
@@ -11,7 +10,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-async function sendEmail(to, subject, text, html) {
+const sendEmail = async (to, subject, text, html) => {
   try {
     const info = await transporter.sendMail({
       from: process.env.EMAIL,
@@ -22,8 +21,9 @@ async function sendEmail(to, subject, text, html) {
     });
     return { success: true, messageId: info.messageId };
   } catch (error) {
-    console.error("Error sending email: ", error);
+    console.error("Error sending email:", error);
     return { success: false, error: error.message };
   }
-}
-module.exports = { sendEmail };
+};
+
+module.exports = sendEmail;
