@@ -5,13 +5,14 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 const connectDB = require("./config/connectDB");
 const userRouter = require("./route/user.route.js");
+const cookieParser = require("cookie-parser");
 
 dotenv.config();
 
 const app = express();
 
 app.use(cors());
-
+app.use(cookieParser());
 app.use(express.json());
 app.use(morgan());
 app.use(
