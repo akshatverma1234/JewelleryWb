@@ -48,6 +48,14 @@ const userSchema = mongoose.Schema(
         ref: "cartProduct",
       },
     ],
+    access_token: {
+      type: String,
+      default: "",
+    },
+    refresh_token: {
+      type: String,
+      default: "",
+    },
     orderHistory: [
       {
         type: mongoose.Schema.ObjectId,
