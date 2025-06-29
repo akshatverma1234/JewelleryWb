@@ -3,8 +3,10 @@ const UserModel = require("../model/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const VerificationEmail = require("../utils/verifyEmailTemplate");
+const { generatedAccessToken } = require("../utils/generateAccessToken");
+const { generatedRefreshToken } = require("../utils/generateRefreshToken");
 
-const registerUserController = async function (req, res) {
+exports.registerUserController = async function (req, res) {
   try {
     const { name, email, password } = req.body;
 
@@ -68,7 +70,7 @@ const registerUserController = async function (req, res) {
   }
 };
 
-const verifyEmailController = async function (req, res) {
+exports.verifyEmailController = async function (req, res) {
   try {
     const { email, otp } = req.body;
 
@@ -81,7 +83,6 @@ const verifyEmailController = async function (req, res) {
       });
     }
 
-    // ✅ Check if OTP has expired first
     if (user.otpExpires < Date.now()) {
       return res.status(400).json({
         error: true,
@@ -90,7 +91,6 @@ const verifyEmailController = async function (req, res) {
       });
     }
 
-    // ✅ Then check if OTP matches
     if (user.otp !== otp) {
       return res.status(400).json({
         error: true,
@@ -99,7 +99,6 @@ const verifyEmailController = async function (req, res) {
       });
     }
 
-    // ✅ If both checks passed
     user.verify_email = true;
     user.otp = null;
     user.otpExpires = null;
@@ -119,7 +118,92 @@ const verifyEmailController = async function (req, res) {
   }
 };
 
-module.exports = {
-  registerUserController,
-  verifyEmailController,
+exports.loginController = async function (req, res) {
+  try {
+    const { email, password } = req.body;
+    const user = await UserModel.findOne({ email: email });
+
+    if (!user) {
+      req.status(400).json({
+        message: "User not registered",
+        success: false,
+        error: true,
+      });
+    }
+    if (user.status !== "Active") {
+      req.status(400).json({
+        message: "Contact to admin",
+        success: false,
+        error: true,
+      });
+    }
+
+    const checkPassword = await bcrypt.compare(password, user.password);
+    if (!checkPassword) {
+      return res.status(500).json({
+        message: "Check you password",
+        success: false,
+        error: true,
+      });
+    }
+
+    const accessToken = await generatedAccessToken(user._id);
+    const refreshToken = await generatedRefreshToken(user._id);
+
+    const updateUser = await UserModel.findByIdAndUpdate(user?._id, {
+      last_login_date: new Date(),
+    });
+    const cookiesOption = {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+    };
+    res.cookie("accessToken", accessToken, cookiesOption);
+    res.cookie("refreshToken", refreshToken, cookiesOption);
+
+    return res.json({
+      message: "Login successfully",
+      error: false,
+      success: true,
+      data: {
+        accessToken,
+        refreshToken,
+      },
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message || error,
+      success: false,
+      error: true,
+    });
+  }
+};
+
+exports.logoutController = async function (req, res) {
+  try {
+    const userid = req.userId;
+
+    const cookiesOption = {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+    };
+    res.clearCookie("accessToken", cookiesOption);
+    res.clearCookie("refreshToken", cookiesOption);
+    const removeRefreshToken = await UserModel.findByIdAndUpdate(userid, {
+      refresh_token: "",
+    });
+
+    return res.json({
+      message: "Logout successfully",
+      error: false,
+      success: true,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message || error,
+      success: false,
+      error: true,
+    });
+  }
 };
