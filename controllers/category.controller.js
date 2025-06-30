@@ -175,7 +175,13 @@ exports.getCategory = async function (req, res) {
       success: true,
       category: category,
     });
-  } catch (error) {}
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message || error,
+      success: false,
+      error: true,
+    });
+  }
 };
 //Remove Images
 
@@ -186,7 +192,7 @@ exports.removeImageFromCloudinary = async function (req, res) {
   const imageName = image.split(".")[0];
 
   if (imageName) {
-    const response = await cloudinary.uploader.destroy(
+    const res = await cloudinary.uploader.destroy(
       imageName,
       (error, result) => {
         // console.log(error, response);
@@ -197,4 +203,55 @@ exports.removeImageFromCloudinary = async function (req, res) {
     }
   }
 };
-exports.deleteCategory = async function (req, res) 
+
+exports.deleteCategory = async function (req, res) {
+  try {
+    const category = await CategoryModel.findById(req.params.id);
+    if (!category) {
+      return res.status(404).json({
+        message: "Category not found!",
+        success: false,
+        error: true,
+      });
+    }
+
+    // 🔥 Delete all category images from Cloudinary
+    const imageDeletePromises = category.images.map((imgUrl) => {
+      const imageName = imgUrl.split("/").pop().split(".")[0];
+      return cloudinary.uploader.destroy(imageName);
+    });
+
+    await Promise.all(imageDeletePromises);
+
+    // 🔥 Get subcategories of the category
+    const subCategories = await CategoryModel.find({ parentId: req.params.id });
+
+    for (const subCat of subCategories) {
+      // Get 3rd-level subcategories
+      const thirdLevel = await CategoryModel.find({ parentId: subCat._id });
+
+      // Delete third-level subcategories
+      for (const thirdSubCat of thirdLevel) {
+        await CategoryModel.findByIdAndDelete(thirdSubCat._id);
+      }
+
+      // Delete the subcategory itself
+      await CategoryModel.findByIdAndDelete(subCat._id);
+    }
+
+    // 🔥 Finally, delete the main category
+    await CategoryModel.findByIdAndDelete(req.params.id);
+
+    return res.status(200).json({
+      success: true,
+      error: false,
+      message: "Category and all related subcategories deleted!",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message || error,
+      success: false,
+      error: true,
+    });
+  }
+};
