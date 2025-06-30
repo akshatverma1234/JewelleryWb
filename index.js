@@ -6,6 +6,7 @@ const helmet = require("helmet");
 const connectDB = require("./config/connectDB");
 const userRouter = require("./route/user.route.js");
 const cookieParser = require("cookie-parser");
+const categoryRouter = require("./route/category.route.js");
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ app.get("/", (req, res) => {
   res.json({ message: "Server is running " + process.env.PORT });
 });
 app.use("/api/user", userRouter);
+app.use("/api/category", categoryRouter);
 connectDB().then(() => {
   app.listen(PORT, () => {
     console.log("Server is running", PORT);
