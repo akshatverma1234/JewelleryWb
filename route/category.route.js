@@ -10,6 +10,7 @@ const {
   getCategories,
   removeImageFromCloudinary,
   deleteCategory,
+  updateCategory,
 } = require("../controllers/category.controller.js");
 
 const categoryRouter = express.Router();
@@ -27,5 +28,6 @@ categoryRouter.get("/get/count/subCat", getSubCategoryCount);
 categoryRouter.get("/:id", getCategory);
 categoryRouter.delete("/deleteImage", auth, removeImageFromCloudinary);
 categoryRouter.delete("/:id", auth, deleteCategory);
+categoryRouter.put("/:id", auth, updateCategory);
 
 module.exports = categoryRouter;

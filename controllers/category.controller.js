@@ -133,7 +133,7 @@ exports.getCategoryCount = async function (req, res) {
     });
   }
 };
-
+//Get SubCategory Count
 exports.getSubCategoryCount = async function (req, res) {
   try {
     const SubCategoryCount = await CategoryModel.find();
@@ -183,8 +183,8 @@ exports.getCategory = async function (req, res) {
     });
   }
 };
-//Remove Images
 
+//Remove Images
 exports.removeImageFromCloudinary = async function (req, res) {
   const imgUrl = req.query.img;
   const urlArr = imgUrl.split("/");
@@ -203,7 +203,7 @@ exports.removeImageFromCloudinary = async function (req, res) {
     }
   }
 };
-
+//Delete Category
 exports.deleteCategory = async function (req, res) {
   try {
     const category = await CategoryModel.findById(req.params.id);
@@ -254,4 +254,31 @@ exports.deleteCategory = async function (req, res) {
       error: true,
     });
   }
+};
+//Update Category
+exports.updateCategory = async function (req, res) {
+  const category = await CategoryModel.findByIdAndUpdate(
+    req.params.id,
+    {
+      name: req.body.name,
+      images: imagesArr.length > 0 ? imagesArr[0] : req.body.images,
+      parentId: req.body.parentId,
+      parentCatName: req.body.parentCatName,
+    },
+    { new: true }
+  );
+  if (!category) {
+    return res.status(500).json({
+      message: "Category cannot be updated!",
+      success: false,
+      error: true,
+    });
+  }
+  imagesArr = [];
+
+  req.status(200).json({
+    success: false,
+    error: true,
+    category: category,
+  });
 };

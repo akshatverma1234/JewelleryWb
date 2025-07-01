@@ -7,7 +7,6 @@ const { generatedAccessToken } = require("../utils/generateAccessToken");
 const { generatedRefreshToken } = require("../utils/generateRefreshToken");
 const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
-const { error } = require("console");
 
 cloudinary.config({
   cloud_name: process.env.cloudinary_Config_Cloud_Name,
@@ -16,6 +15,7 @@ cloudinary.config({
   secure: true,
 });
 
+//Register User
 exports.registerUserController = async function (req, res) {
   try {
     const { name, email, password } = req.body;
@@ -79,7 +79,7 @@ exports.registerUserController = async function (req, res) {
     });
   }
 };
-
+//Verify Email
 exports.verifyEmailController = async function (req, res) {
   try {
     const { email, otp } = req.body;
@@ -127,7 +127,7 @@ exports.verifyEmailController = async function (req, res) {
     });
   }
 };
-
+//Login User
 exports.loginController = async function (req, res) {
   try {
     const { email, password } = req.body;
@@ -195,7 +195,7 @@ exports.loginController = async function (req, res) {
     });
   }
 };
-
+//Logout
 exports.logoutController = async function (req, res) {
   try {
     const userid = req.userId;
@@ -225,6 +225,7 @@ exports.logoutController = async function (req, res) {
   }
 };
 
+//User Avatar
 var imagesArr = [];
 exports.userAvatarController = async function (req, res) {
   try {
@@ -283,7 +284,7 @@ exports.userAvatarController = async function (req, res) {
     });
   }
 };
-
+//Remove
 exports.removeImageFromCloudinary = async function (req, res) {
   const imgUrl = req.query.img;
   const urlArr = imgUrl.split("/");
@@ -545,7 +546,7 @@ exports.refreshTokenController = async function (req, res) {
     });
   }
 };
-
+//Get User Details
 exports.userDetailsController = async function (req, res) {
   try {
     const userId = req.userId;
