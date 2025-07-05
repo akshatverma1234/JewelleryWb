@@ -8,6 +8,7 @@ const userRouter = require("./route/user.route.js");
 const cookieParser = require("cookie-parser");
 const categoryRouter = require("./route/category.route.js");
 const productRouter = require("./route/product.route.js");
+const cartRouter = require("./route/cart.route.js");
 
 dotenv.config();
 
@@ -31,6 +32,7 @@ app.get("/", (req, res) => {
 app.use("/api/user", userRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/product", productRouter);
+app.use("/api/cart", cartRouter);
 
 connectDB().then(() => {
   app.listen(PORT, () => {
