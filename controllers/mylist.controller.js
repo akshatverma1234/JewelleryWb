@@ -62,9 +62,9 @@ exports.deleteMyListController = async (req, res) => {
       });
     }
 
-    const deletedItem = await MyListModel.findByIdAndDelete(request.params.id);
+    const deletedItem = await MyListModel.findByIdAndDelete(req.params.id);
     if (!deletedItem) {
-      return response.status(404).json({
+      return res.status(404).json({
         error: false,
         success: false,
         message: "The item is not deleted",
