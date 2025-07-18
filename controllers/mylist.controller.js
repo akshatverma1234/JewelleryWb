@@ -49,3 +49,37 @@ exports.addToMyListController = async (req, res) => {
     });
   }
 };
+
+exports.deleteMyListController = async (req, res) => {
+  try {
+    const myListItem = await MyListModel.findById(req.params.id);
+
+    if (!myListItem) {
+      return res.status(404).json({
+        message: "The item with this given id was not found",
+        error: true,
+        success: false,
+      });
+    }
+
+    const deletedItem = await MyListModel.findByIdAndDelete(request.params.id);
+    if (!deletedItem) {
+      return response.status(404).json({
+        error: false,
+        success: false,
+        message: "The item is not deleted",
+      });
+    }
+    return res.status(200).json({
+      message: "The item removed from my list",
+      error: false,
+      success: true,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message || message,
+      error: true,
+      success: false,
+    });
+  }
+};
