@@ -83,3 +83,24 @@ exports.deleteMyListController = async (req, res) => {
     });
   }
 };
+
+exports.getMyListController = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const myListItems = await MyListModel.find({
+      userId: userId,
+    });
+
+    return res.status(200).json({
+      error: false,
+      success: true,
+      data: myListItems,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message || message,
+      error: true,
+      success: false,
+    });
+  }
+};
