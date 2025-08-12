@@ -9,6 +9,11 @@ import { FcGoogle } from "react-icons/fc";
 
 const Register = () => {
   const [showPassword, setIsShowPassword] = useState(false);
+  const [formFields, setFormFields] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
   return (
     <section className="section !py-10">
@@ -22,6 +27,7 @@ const Register = () => {
               <TextField
                 type="text"
                 id="name"
+                name="name"
                 label="Full Name"
                 variant="outlined"
                 className="!w-full"
@@ -31,6 +37,7 @@ const Register = () => {
               <TextField
                 type="email"
                 id="email"
+                name="email"
                 label="Email Id"
                 variant="outlined"
                 className="!w-full"
@@ -40,6 +47,7 @@ const Register = () => {
               <TextField
                 type={showPassword === false ? "password" : "text"}
                 id="password"
+                name="password"
                 label="Password"
                 variant="outlined"
                 className="!w-full"

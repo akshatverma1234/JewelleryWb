@@ -51,6 +51,9 @@ body {
   background: #a67c52;
 }
 
+.overflow-x-auto::-webkit-scrollbar-thumb {
+  background: #ccc;
+}
 .container {
   width: 90%;
   margin: auto;

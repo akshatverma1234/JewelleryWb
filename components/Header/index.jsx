@@ -169,20 +169,24 @@ const Header = () => {
                         <span className="text-[14px]">My account</span>
                       </MenuItem>
                     </Link>
-                    <MenuItem
-                      onClick={handleClose}
-                      className="flex gap-2 !py-2"
-                    >
-                      <BsFillBagCheckFill className="text-[18px]" />
-                      <span className="text-[14px]">Orders</span>
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleClose}
-                      className="flex gap-2 !py-2"
-                    >
-                      <FiHeart className="text-[18px]" />{" "}
-                      <span className="text-[14px]">My List</span>
-                    </MenuItem>
+                    <Link href="/my-orders" className="w-full block">
+                      <MenuItem
+                        onClick={handleClose}
+                        className="flex gap-2 !py-2"
+                      >
+                        <BsFillBagCheckFill className="text-[18px]" />
+                        <span className="text-[14px]">Orders</span>
+                      </MenuItem>
+                    </Link>
+                    <Link href="/my-list" className="w-full block">
+                      <MenuItem
+                        onClick={handleClose}
+                        className="flex gap-2 !py-2"
+                      >
+                        <FiHeart className="text-[18px]" />{" "}
+                        <span className="text-[14px]">My List</span>
+                      </MenuItem>
+                    </Link>
                     <MenuItem
                       onClick={handleClose}
                       className="flex gap-2 !py-2"
