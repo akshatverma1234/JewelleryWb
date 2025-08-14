@@ -49,26 +49,28 @@ const Login = () => {
       context.openAlertBox("error", "Please enter password");
       return false;
     }
-    postData("/api/user/login", formFields).then((res) => {
-      console.log(res);
-      if (res?.error !== true) {
-        setIsLoading(false);
-        context.openAlertBox("success", res?.message);
-        localStorage.setItem("userEmail", formFields.email);
-        setFormFields({
-          email: "",
-          password: "",
-        });
-        localStorage.setItem("accessToken", res?.data?.accessToken);
-        localStorage.setItem("refreshToken", res?.data?.refreshToken);
+    postData("/api/user/login", formFields, { withCredentials: true }).then(
+      (res) => {
+        console.log(res);
+        if (res?.error !== true) {
+          setIsLoading(false);
+          context.openAlertBox("success", res?.message);
+          localStorage.setItem("userEmail", formFields.email);
+          setFormFields({
+            email: "",
+            password: "",
+          });
+          localStorage.setItem("accessToken", res?.data?.accessToken);
+          localStorage.setItem("refreshToken", res?.data?.refreshToken);
 
-        context.setIsLogin(true);
-        history.push("/");
-      } else {
-        context.openAlertBox("error", res?.message);
-        setIsLoading(false);
+          context.setIsLogin(true);
+          history.push("/");
+        } else {
+          context.openAlertBox("error", res?.message);
+          setIsLoading(false);
+        }
       }
-    });
+    );
   };
   return (
     <section className="section !py-10">

@@ -17,6 +17,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { BsFillBagCheckFill } from "react-icons/bs";
 import { FiHeart } from "react-icons/fi";
 import { HiOutlineLogout } from "react-icons/hi";
+import { fetchData } from "@/utils/api";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -37,6 +38,22 @@ const Header = () => {
     setAnchorEl(null);
   };
   const context = useContext(MyContext);
+
+  const logout = () => {
+    setAnchorEl(null);
+    fetchData(`/api/user/logout?token=${localStorage.getItem("accessToken")}`, {
+      withCredentials: true,
+    }).then((res) => {
+      console.log(res);
+      if (res?.error === false) {
+        context.setIsLogin(false);
+        context.openAlertBox("success", res?.message);
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+      }
+    });
+  };
+
   return (
     <header className="bg-white">
       <div className="topstrip py-2 border-t-[1px] border-gray-200 border-b-[1px]">
@@ -115,10 +132,10 @@ const Header = () => {
                     </div>
                     <div className="info flex flex-col">
                       <h4 className="text-[14px] !mb-0 capitalize text-left justify-start font-[500] text-[rgba(0,0,0,0.6)] leading-3">
-                        Akshat Verma
+                        {context.userData?.name}
                       </h4>
                       <span className="text-[13px] capitalize text-left justify-start font-[400] text-[rgba(0,0,0,0.6)]">
-                        {localStorage.getItem("userEmail")}
+                        {context.userData?.email}
                       </span>
                     </div>
                   </Button>
@@ -187,10 +204,7 @@ const Header = () => {
                         <span className="text-[14px]">My List</span>
                       </MenuItem>
                     </Link>
-                    <MenuItem
-                      onClick={handleClose}
-                      className="flex gap-2 !py-2"
-                    >
+                    <MenuItem onClick={logout} className="flex gap-2 !py-2">
                       <HiOutlineLogout className="text-[18px]" />
                       <span className="text-[14px]">Logout</span>
                     </MenuItem>

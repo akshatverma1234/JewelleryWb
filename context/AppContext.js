@@ -10,6 +10,7 @@ import ProductDetailsComponent from "@/components/ProductDetails/index";
 import Drawer from "@mui/material/Drawer";
 import CartPanel from "@/components/CartPanel";
 import toast, { Toaster } from "react-hot-toast";
+import { fetchData } from "@/utils/api";
 
 const MyContext = createContext();
 
@@ -20,15 +21,23 @@ export const AppProvider = ({ children }) => {
 
   const [openCartPanel, setOpenCartPanel] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     if (token !== undefined && token !== null && token !== "") {
       setIsLogin(true);
+
+      fetchData(
+        `/api/user/user-details?token=${localStorage.getItem("accessToken")}`
+      ).then((res) => {
+        setUserData(res.data);
+      });
     } else {
       setIsLogin(false);
     }
   }, [isLogin]);
+
   const toggleDrawerCart = (newOpen) => {
     setOpenCartPanel(newOpen);
   };
@@ -53,6 +62,8 @@ export const AppProvider = ({ children }) => {
     openAlertBox,
     isLogin,
     setIsLogin,
+    setUserData,
+    userData,
   };
   return (
     <>
