@@ -1,16 +1,32 @@
 "use client";
 import OtpBox from "@/components/OtpBox/index";
+import { postData } from "@/utils/api";
 import Button from "@mui/material/Button";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { useRouter } from "next/navigation";
+import { MyContext } from "@/context/AppContext";
 
 const Verify = () => {
   const [otp, setOtp] = useState("");
+  const history = useRouter();
+  const context = useContext(MyContext);
   const handleOtpChange = (value) => {
     setOtp(value);
   };
   const verifyOTP = (e) => {
     e.preventDefault();
-    alert(otp);
+    postData("/api/user/verifyEmail", {
+      email: localStorage.getItem("userEmail"),
+      otp: otp,
+    }).then((res) => {
+      if (res?.error === false) {
+        context.openAlertBox("success", res?.message);
+        localStorage.removeItem("userEmail");
+        history.push("/login");
+      } else {
+        context.openAlertBox("error", res?.message);
+      }
+    });
   };
   return (
     <section className="section !py-10">
@@ -24,7 +40,9 @@ const Verify = () => {
           </h3>
           <p className="!mt-0 !mb-4 text-center">
             OTP send to{" "}
-            <span className="text-amber-600 font-bold ">akshat@gmail.com</span>
+            <span className="text-amber-600 font-bold ">
+              {localStorage.getItem("userEmail")}
+            </span>
           </p>
           <form onSubmit={verifyOTP}>
             {" "}

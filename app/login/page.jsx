@@ -8,20 +8,68 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
 import { MyContext } from "@/context/AppContext";
+import CircularProgress from "@mui/material/CircularProgress";
+import { postData } from "@/utils/api";
 
 const Login = () => {
-  const context = useContext(MyContext);
+  const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setIsShowPassword] = useState(false);
   const [formFields, setFormFields] = useState({
     email: "",
     password: "",
   });
+
+  const context = useContext(MyContext);
   const history = useRouter();
   const forgotPassword = () => {
     history.push("/verify");
     context.openAlertBox("success", "OTP Send");
   };
 
+  const onChangeInput = (e) => {
+    const { name, value } = e.target;
+    setFormFields(() => {
+      return {
+        ...formFields,
+        [name]: value,
+      };
+    });
+  };
+  const validate = Object.values(formFields).every((el) => el);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    if (formFields.email === "") {
+      context.openAlertBox("error", "Please enter email");
+      return false;
+    }
+    if (formFields.password === "") {
+      context.openAlertBox("error", "Please enter password");
+      return false;
+    }
+    postData("/api/user/login", formFields).then((res) => {
+      console.log(res);
+      if (res?.error !== true) {
+        setIsLoading(false);
+        context.openAlertBox("success", res?.message);
+        localStorage.setItem("userEmail", formFields.email);
+        setFormFields({
+          email: "",
+          password: "",
+        });
+        localStorage.setItem("accessToken", res?.data?.accessToken);
+        localStorage.setItem("refreshToken", res?.data?.refreshToken);
+
+        context.setIsLogin(true);
+        history.push("/");
+      } else {
+        context.openAlertBox("error", res?.message);
+        setIsLoading(false);
+      }
+    });
+  };
   return (
     <section className="section !py-10">
       <div className="container">
@@ -29,7 +77,7 @@ const Login = () => {
           <h3 className="text-center text-[18px] text-black">
             Login to your account
           </h3>
-          <form className="!w-full !mt-5">
+          <form className="!w-full !mt-5" onSubmit={handleSubmit}>
             <div className="form-group w-full !mb-5">
               <TextField
                 type="email"
@@ -38,6 +86,9 @@ const Login = () => {
                 variant="outlined"
                 className="!w-full"
                 name="email"
+                value={formFields.email}
+                disabled={isLoading === true ? true : false}
+                onChange={onChangeInput}
               />
             </div>
             <div className="form-group w-full !mb-5 relative">
@@ -48,6 +99,9 @@ const Login = () => {
                 variant="outlined"
                 className="!w-full"
                 name="password"
+                value={formFields.password}
+                disabled={isLoading === true ? true : false}
+                onChange={onChangeInput}
               />
               <Button
                 type="submit"
@@ -68,7 +122,17 @@ const Login = () => {
               Forgot Password?
             </a>
             <div className="flex items-center w-full !mt-3 !mb-3">
-              <Button className="btn-org !w-full btn-lg">Login</Button>
+              <Button
+                type="submit"
+                disabled={!validate}
+                className="btn-org !w-full btn-lg flex gap-3"
+              >
+                {isLoading === true ? (
+                  <CircularProgress color="inherit" />
+                ) : (
+                  "Login"
+                )}
+              </Button>
             </div>
             <p className="text-center">
               Not Registered?{" "}

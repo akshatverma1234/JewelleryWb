@@ -327,3 +327,7 @@ input.MuiInputBase-input {
   background-color: #d32f2f;
   border-radius: 0 4px 4px 0;
 }
+button .MuiCircularProgress-root {
+  width: 30px !important;
+  height: 30px !important;
+}

@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import React from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -19,8 +19,16 @@ export const AppProvider = ({ children }) => {
   const [maxWidth, setMaxWidth] = useState("lg");
 
   const [openCartPanel, setOpenCartPanel] = useState(false);
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
 
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (token !== undefined && token !== null && token !== "") {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+  }, [isLogin]);
   const toggleDrawerCart = (newOpen) => {
     setOpenCartPanel(newOpen);
   };
@@ -77,7 +85,6 @@ export const AppProvider = ({ children }) => {
           </DialogContent>
         </Dialog>
 
-        {/* Cart Panel */}
         <Drawer
           anchor="right"
           open={openCartPanel}

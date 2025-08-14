@@ -118,7 +118,7 @@ const Header = () => {
                         Akshat Verma
                       </h4>
                       <span className="text-[13px] capitalize text-left justify-start font-[400] text-[rgba(0,0,0,0.6)]">
-                        akshat@gmail.com
+                        {localStorage.getItem("userEmail")}
                       </span>
                     </div>
                   </Button>
