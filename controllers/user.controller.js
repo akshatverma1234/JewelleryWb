@@ -294,9 +294,7 @@ exports.removeImageFromCloudinary = async function (req, res) {
   if (imageName) {
     const response = await cloudinary.uploader.destroy(
       imageName,
-      (error, result) => {
-        // console.log(error, response);
-      }
+      (error, result) => {}
     );
     if (response) {
       res.status(200).send(response);
@@ -380,12 +378,14 @@ exports.forgotPasswordController = async function (req, res) {
     user.otp = verifyCode;
     user.otpExpires = Date.now() + 600000;
 
-    await sendEmailFun({
-      sendTo: email,
-      subject: "Verify email from Verma Jewellers",
-      text: "",
-      html: VerificationEmail(user.name, verifyCode),
-    });
+    await user.save();
+
+    await sendEmailFun(
+      email,
+      "Verify OTP from Verma Jewellers",
+      "",
+      VerificationEmail(user.name, verifyCode)
+    );
     return res.json({
       message: "check your email",
       error: false,
@@ -411,6 +411,7 @@ exports.verifyPasswordController = async function (req, res) {
         success: false,
       });
     }
+
     if (!email || !otp) {
       return res.status(400).json({
         message: "Provide required field email, otp.",
@@ -438,10 +439,10 @@ exports.verifyPasswordController = async function (req, res) {
     user.otpExpires = "";
     await user.save();
 
-    return res.status(400).json({
+    return res.status(200).json({
       message: "Verified Otp successfully",
-      error: true,
-      success: false,
+      error: false,
+      success: true,
     });
   } catch (error) {
     return res.status(500).json({
@@ -466,14 +467,14 @@ exports.resetPasswordController = async function (req, res) {
     }
     const user = await UserModel.findOne({ email });
     if (!user) {
-      return response.status(400).json({
+      return res.status(400).json({
         message: "Email is not available",
         error: true,
         success: false,
       });
     }
     if (newPassword !== confirmPassword) {
-      return response.status(400).json({
+      return res.status(400).json({
         message: "newPassword and confirmPassword must be same.",
         error: true,
         success: false,
@@ -484,12 +485,13 @@ exports.resetPasswordController = async function (req, res) {
     user.password = hashPassword;
     await user.save();
 
-    return response.json({
+    return res.json({
       message: "Password updated successfully.",
       error: false,
       success: true,
     });
   } catch (error) {
+    console.error("Reset password error:", error);
     return res.status(500).json({
       message: error.message || error,
       success: false,
