@@ -6,18 +6,66 @@ import Button from "@mui/material/Button";
 import { useRouter } from "next/navigation";
 import { MyContext } from "@/context/AppContext";
 import { LuEyeClosed } from "react-icons/lu";
+import { postData } from "@/utils/api";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const ForgotPassword = () => {
   const context = useContext(MyContext);
+  const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setIsShowPassword] = useState(false);
   const [showPassword2, setIsShowPassword2] = useState(false);
+  const [formFields, setFormFields] = useState({
+    email: localStorage.getItem("userEmail"),
+    newPassword: "",
+    confirmPassword: "",
+  });
 
   const history = useRouter();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Logic to submit new password
-    console.log("Password reset submitted");
+
+    setIsLoading(true);
+
+    if (formFields.newPassword === "") {
+      context.openAlertBox("error", "Please enter new password");
+      setIsLoading(false);
+      return false;
+    }
+    if (formFields.confirmPassword === "") {
+      context.openAlertBox("error", "Please enter confirm password");
+      setIsLoading(false);
+      return false;
+    }
+    if (formFields.confirmPassword !== formFields.newPassword) {
+      context.openAlertBox("error", "Password and confirm password not match");
+      setIsLoading(false);
+      return false;
+    }
+
+    postData("/api/user/reset-password", formFields).then((res) => {
+      if (res?.error === false) {
+        localStorage.removeItem("userEmail");
+        localStorage.removeItem("actionType");
+        context.openAlertBox("success", res?.message);
+        setIsLoading(false);
+        history.push("/login");
+      } else {
+        context.openAlertBox("error", res?.message);
+      }
+    });
+  };
+
+  const validate = Object.values(formFields).every((el) => el);
+
+  const onChangeInput = (e) => {
+    const { name, value } = e.target;
+    setFormFields(() => {
+      return {
+        ...formFields,
+        [name]: value,
+      };
+    });
   };
 
   return (
@@ -35,7 +83,10 @@ const ForgotPassword = () => {
                 label="New Password"
                 variant="outlined"
                 className="!w-full"
-                name="password"
+                disabled={isLoading === true ? true : false}
+                name="newPassword"
+                value={formFields.newPassword}
+                onChange={onChangeInput}
               />
               <Button
                 type="button"
@@ -57,7 +108,10 @@ const ForgotPassword = () => {
                 label="Confirm Password"
                 variant="outlined"
                 className="!w-full"
-                name="confirm_password"
+                disabled={isLoading === true ? true : false}
+                name="confirmPassword"
+                value={formFields.confirmPassword}
+                onChange={onChangeInput}
               />
               <Button
                 type="button"
@@ -73,8 +127,16 @@ const ForgotPassword = () => {
             </div>
 
             <div className="flex items-center w-full !mt-3 !mb-3">
-              <Button type="submit" className="btn-org !w-full btn-lg">
-                Reset Password
+              <Button
+                type="submit"
+                disabled={!validate}
+                className="btn-org !w-full btn-lg flex gap-3"
+              >
+                {isLoading === true ? (
+                  <CircularProgress color="inherit" />
+                ) : (
+                  "Change Password"
+                )}
               </Button>
             </div>
           </form>

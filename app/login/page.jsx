@@ -21,9 +21,28 @@ const Login = () => {
 
   const context = useContext(MyContext);
   const history = useRouter();
+
   const forgotPassword = () => {
-    history.push("/verify");
-    context.openAlertBox("success", "OTP Send");
+    if (formFields.email === "") {
+      context.openAlertBox("error", "Please enter email id");
+      setIsLoading(false);
+      return false;
+    } else {
+      context.openAlertBox("success", `Otp send to ${formFields.email}`);
+      localStorage.setItem("userEmail", formFields.email);
+      localStorage.setItem("actionType", "forgot-password");
+
+      postData("/api/user/forgot-password", {
+        email: formFields.email,
+      }).then((res) => {
+        if (res?.error === false) {
+          context.openAlertBox("success", res?.message);
+          history.push("/verify");
+        } else {
+          context.openAlertBox("error", res?.message);
+        }
+      });
+    }
   };
 
   const onChangeInput = (e) => {
@@ -43,10 +62,12 @@ const Login = () => {
 
     if (formFields.email === "") {
       context.openAlertBox("error", "Please enter email");
+      setIsLoading(false);
       return false;
     }
     if (formFields.password === "") {
       context.openAlertBox("error", "Please enter password");
+      setIsLoading(false);
       return false;
     }
     postData("/api/user/login", formFields, { withCredentials: true }).then(

@@ -2,7 +2,7 @@
 import OtpBox from "@/components/OtpBox/index";
 import { postData } from "@/utils/api";
 import Button from "@mui/material/Button";
-import React, { useContext, useState } from "react";
+import React, { act, useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 import { MyContext } from "@/context/AppContext";
 
@@ -13,20 +13,45 @@ const Verify = () => {
   const handleOtpChange = (value) => {
     setOtp(value);
   };
-  const verifyOTP = (e) => {
+
+  const verifyOTP = async (e) => {
     e.preventDefault();
-    postData("/api/user/verifyEmail", {
-      email: localStorage.getItem("userEmail"),
-      otp: otp,
-    }).then((res) => {
+
+    const email = localStorage.getItem("userEmail");
+    const actionType = localStorage.getItem("actionType");
+
+    if (!email) {
+      context.openAlertBox("error", "Email not found. Please try again.");
+      return;
+    }
+
+    if (!otp || otp.trim() === "") {
+      context.openAlertBox("error", "Please enter OTP");
+      return;
+    }
+
+    try {
+      const endpoint =
+        actionType === "forgot-password"
+          ? "/api/user/verify-forgot-password"
+          : "/api/user/verifyEmail";
+
+      const res = await postData(endpoint, { email, otp });
+
       if (res?.error === false) {
         context.openAlertBox("success", res?.message);
-        localStorage.removeItem("userEmail");
-        history.push("/login");
+        localStorage.removeItem("actionType");
+
+        const redirectPath =
+          actionType === "forgot-password" ? "/forgot-password" : "/login";
+        history.push(redirectPath);
       } else {
         context.openAlertBox("error", res?.message);
       }
-    });
+    } catch (error) {
+      console.error("Verification error:", error);
+      context.openAlertBox("error", "Verification failed. Please try again.");
+    }
   };
   return (
     <section className="section !py-10">
