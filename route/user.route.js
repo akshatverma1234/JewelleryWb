@@ -23,7 +23,7 @@ userRouter.post("/verifyEmail", verifyEmailController);
 userRouter.post("/login", loginController);
 userRouter.get("/logout", auth, logoutController);
 userRouter.put(
-  "/upload-avatar",
+  "/user-avatar",
   auth,
   upload.array("avatar"),
   userAvatarController

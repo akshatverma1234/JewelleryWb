@@ -349,7 +349,14 @@ exports.updateUserController = async function (req, res) {
       message: "User updated successfully",
       error: false,
       success: true,
-      user: updateUser,
+      user: {
+        name: updateUser?.name,
+        _id: updateUser?._id,
+        email: updateUser?.email,
+        mobile: updateUser?.mobile,
+        avatar: updateUser?.avatar,
+        address_details: updateUser?.address_details,
+      },
     });
   } catch (error) {
     return res.status(500).json({
@@ -456,7 +463,7 @@ exports.verifyPasswordController = async function (req, res) {
 //Reset Password
 exports.resetPasswordController = async function (req, res) {
   try {
-    const { email, newPassword, confirmPassword } = req.body;
+    const { email, oldPassword, newPassword, confirmPassword } = req.body;
     if (!email || !newPassword || !confirmPassword) {
       return res.status(400).json({
         message:
@@ -471,6 +478,15 @@ exports.resetPasswordController = async function (req, res) {
         message: "Email is not available",
         error: true,
         success: false,
+      });
+    }
+
+    const checkPassword = await bcrypt.compare(oldPassword, user.password);
+    if (!checkPassword) {
+      return res.status(500).json({
+        message: "Your old password is wrong",
+        success: false,
+        error: true,
       });
     }
     if (newPassword !== confirmPassword) {
