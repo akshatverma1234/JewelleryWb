@@ -28,9 +28,7 @@ export const AppProvider = ({ children }) => {
     if (token !== undefined && token !== null && token !== "") {
       setIsLogin(true);
 
-      fetchData(
-        `/api/user/user-details?token=${localStorage.getItem("accessToken")}`
-      ).then((res) => {
+      fetchData(`/api/user/user-details`).then((res) => {
         setUserData(res.data);
       });
     } else {

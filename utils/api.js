@@ -25,15 +25,36 @@ export const postData = async (url, formData) => {
 
 export const fetchData = async (url) => {
   try {
-    const { data } = await axios.get(apiUrl + url, {
+    const params = {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         "Content-Type": "application/json",
       },
-    });
+    };
+    const { data } = await axios.get(apiUrl + url, params);
     return data;
   } catch (error) {
     console.error(error);
     return { error: true, message: error.message };
+  }
+};
+export const uploadImage = async (url, updatedData) => {
+  try {
+    const params = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        "Content-Type": "multipart/form-data",
+      },
+    };
+
+    const res = await axios.put(apiUrl + url, updatedData, params);
+
+    return res;
+  } catch (err) {
+    console.error("Error in editData:", err);
+    return {
+      error: true,
+      message: err.response?.data?.message || "Something went wrong",
+    };
   }
 };

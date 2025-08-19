@@ -1,17 +1,22 @@
 "use client";
 import { Button } from "@mui/material";
-import React from "react";
-import { IoCloudUpload } from "react-icons/io5";
-import { FaRegUser } from "react-icons/fa";
-import { BsFillBagCheckFill } from "react-icons/bs";
-import { HiOutlineLogout } from "react-icons/hi";
-import { FiHeart } from "react-icons/fi";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
+import React, { useContext, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import AccountSidebar from "@/components/AccountSidebar";
+import { MyContext } from "@/context/AppContext";
+import { useRouter } from "next/navigation";
 
 const MyAccount = () => {
+  const context = useContext(MyContext);
+  const history = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (token === null) {
+      history.push("/");
+    }
+  }, [context.isLogin]);
+
   return (
     <section className="!py-10 w-full">
       <div className="container flex gap-5">
