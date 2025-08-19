@@ -28,8 +28,22 @@ export const AppProvider = ({ children }) => {
     if (token !== undefined && token !== null && token !== "") {
       setIsLogin(true);
 
-      fetchData(`/api/user/user-details`).then((res) => {
+      fetchData("/api/user/user-details").then((res) => {
         setUserData(res.data);
+        console.log(res?.response?.data);
+
+        if (res?.response?.data?.error === true) {
+          if (res?.response?.data?.message === "You have not login") {
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
+
+            openAlertBox(
+              "error",
+              "Your session is closed!. Please login again"
+            );
+            setIsLogin(false);
+          }
+        }
       });
     } else {
       setIsLogin(false);

@@ -51,6 +51,27 @@ export const uploadImage = async (url, updatedData) => {
 
     return res;
   } catch (err) {
+    console.error("Error in uploadImage:", err);
+    return {
+      error: true,
+      message: err.response?.data?.message || "Something went wrong",
+    };
+  }
+};
+
+export const editData = async (url, updatedData) => {
+  try {
+    const params = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        "Content-Type": "application/json",
+      },
+    };
+
+    const res = await axios.put(apiUrl + url, updatedData, params);
+
+    return res;
+  } catch (err) {
     console.error("Error in editData:", err);
     return {
       error: true,
