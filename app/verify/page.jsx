@@ -2,7 +2,7 @@
 import OtpBox from "@/components/OtpBox/index";
 import { postData } from "@/utils/api";
 import Button from "@mui/material/Button";
-import React, { act, useContext, useState } from "react";
+import React, { act, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { MyContext } from "@/context/AppContext";
 
@@ -13,6 +13,12 @@ const Verify = () => {
   const handleOtpChange = (value) => {
     setOtp(value);
   };
+  const [userEmail, setUserEmail] = useState("");
+
+  useEffect(() => {
+    const email = localStorage.getItem("userEmail");
+    if (email) setUserEmail(email);
+  }, []);
 
   const verifyOTP = async (e) => {
     e.preventDefault();
@@ -65,9 +71,7 @@ const Verify = () => {
           </h3>
           <p className="!mt-0 !mb-4 text-center">
             OTP send to{" "}
-            <span className="text-amber-600 font-bold ">
-              {localStorage.getItem("userEmail")}
-            </span>
+            <span className="text-amber-600 font-bold ">{userEmail}</span>
           </p>
           <form onSubmit={verifyOTP}>
             {" "}

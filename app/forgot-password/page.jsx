@@ -1,7 +1,7 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
-import { IoIosEye, IoIosEyeOff } from "react-icons/io";
+import { IoIosEye } from "react-icons/io";
 import Button from "@mui/material/Button";
 import { useRouter } from "next/navigation";
 import { MyContext } from "@/context/AppContext";
@@ -15,11 +15,22 @@ const ForgotPassword = () => {
   const [showPassword, setIsShowPassword] = useState(false);
   const [showPassword2, setIsShowPassword2] = useState(false);
   const [formFields, setFormFields] = useState({
-    email: localStorage.getItem("userEmail"),
+    email: "",
     newPassword: "",
     confirmPassword: "",
   });
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedEmail = localStorage.getItem("userEmail");
+      if (storedEmail) {
+        setFormFields((prev) => ({
+          ...prev,
+          email: storedEmail,
+        }));
+      }
+    }
+  }, []);
   const history = useRouter();
 
   const handleSubmit = (e) => {
