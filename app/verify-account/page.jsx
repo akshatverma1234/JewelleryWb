@@ -4,16 +4,58 @@ import Button from "@mui/material/Button";
 import { CgLogIn } from "react-icons/cg";
 import { FaRegUser } from "react-icons/fa";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { MyContext } from "@/context/AppContext";
+import { useRouter } from "next/navigation";
+import { postData } from "@/utils/api";
 
 const Verify = () => {
   const [otp, setOtp] = useState("");
+
   const handleOtpChange = (value) => {
     setOtp(value);
   };
-  const verifyOTP = (e) => {
+  const history = useRouter();
+  const context = useContext(MyContext);
+
+  const verifyOTP = async (e) => {
     e.preventDefault();
-    alert(otp);
+
+    const email = localStorage.getItem("userEmail");
+    const actionType = localStorage.getItem("actionType");
+
+    if (!email) {
+      context.openAlertBox("error", "Email not found. Please try again.");
+      return;
+    }
+
+    if (!otp || otp.trim() === "") {
+      context.openAlertBox("error", "Please enter OTP");
+      return;
+    }
+
+    try {
+      const endpoint =
+        actionType === "forgot-password"
+          ? "/api/user/verify-forgot-password"
+          : "/api/user/verifyEmail";
+
+      const res = await postData(endpoint, { email, otp });
+
+      if (res?.error === false) {
+        context.openAlertBox("success", res?.message);
+        localStorage.removeItem("actionType");
+
+        const redirectPath =
+          actionType === "forgot-password" ? "/change-password" : "/login";
+        history.push(redirectPath);
+      } else {
+        context.openAlertBox("error", res?.message);
+      }
+    } catch (error) {
+      console.error("Verification error:", error);
+      context.openAlertBox("error", "Verification failed. Please try again.");
+    }
   };
   return (
     <section className="bg-[#fff] w-full">
@@ -51,7 +93,9 @@ const Verify = () => {
 
           <p className="!mt-0 !mb-4 text-center">
             OTP send to{" "}
-            <span className="text-amber-600 font-bold ">akshat@gmail.com</span>
+            <span className="text-amber-600 font-bold ">
+              {localStorage.getItem("userEmail")}
+            </span>
           </p>
           <form onSubmit={verifyOTP}>
             {" "}

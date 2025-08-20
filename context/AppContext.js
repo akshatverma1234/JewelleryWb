@@ -1,5 +1,5 @@
 "use client";
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -16,6 +16,8 @@ import ProductAdd from "@/app/products/upload/page";
 import AddHomeSlide from "@/components/HomeSlideBanners/addHomeSlide";
 import AddCategory from "@/components/AddCategory";
 import AddSubCategory from "@/components/AddSubCategory";
+import toast, { Toaster } from "react-hot-toast";
+import { fetchData } from "@/utils/api";
 
 const MyContext = createContext();
 
@@ -29,6 +31,30 @@ export const AppProvider = ({ children }) => {
     open: false,
     model: "",
   });
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (token !== undefined && token !== null && token !== "") {
+      setIsLogin(true);
+
+      fetchData(`/api/user/user-details`).then((res) => {
+        setUserData(res.data);
+      });
+    } else {
+      setIsLogin(false);
+    }
+  }, [isLogin]);
+
+  const openAlertBox = (status, msg) => {
+    if (status === "success") {
+      toast.success(msg);
+    }
+    if (status === "error") {
+      toast.error(msg);
+    }
+  };
+
   const values = {
     isOpenSideBar,
     setOpenSideBar,
@@ -36,10 +62,14 @@ export const AppProvider = ({ children }) => {
     setIsLogin,
     isOpenPanel,
     setOpenPanel,
+    openAlertBox,
+    setUserData,
+    userData,
   };
   return (
     <>
       <MyContext.Provider value={values}>
+        <Toaster position="top-right" reverseOrder={false} />
         {children}
         <Dialog
           fullScreen

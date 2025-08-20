@@ -2,11 +2,6 @@
 import { Button, FormControl } from "@mui/material";
 import { CgLogIn } from "react-icons/cg";
 import { FaRegUser } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
-import { SiFacebook } from "react-icons/si";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -14,11 +9,22 @@ import IconButton from "@mui/material/IconButton";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import CircularProgress from "@mui/material/CircularProgress";
+import { MyContext } from "@/context/AppContext";
+import { postData } from "@/utils/api";
+import { useRouter } from "next/navigation";
 
 const ChangePassword = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
+  const [formFields, setFormFields] = useState({
+    email: localStorage.getItem("userEmail"),
+    newPassword: "",
+    confirmPassword: "",
+  });
+  const context = useContext(MyContext);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleClickShowPassword2 = () => setShowPassword2((show) => !show);
@@ -30,6 +36,53 @@ const ChangePassword = () => {
     event.preventDefault();
   };
 
+  const history = useRouter();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    setIsLoading(true);
+
+    if (formFields.newPassword === "") {
+      context.openAlertBox("error", "Please enter new password");
+      setIsLoading(false);
+      return false;
+    }
+    if (formFields.confirmPassword === "") {
+      context.openAlertBox("error", "Please enter confirm password");
+      setIsLoading(false);
+      return false;
+    }
+    if (formFields.confirmPassword !== formFields.newPassword) {
+      context.openAlertBox("error", "Password and confirm password not match");
+      setIsLoading(false);
+      return false;
+    }
+
+    postData("/api/user/reset-password", formFields).then((res) => {
+      if (res?.error === false) {
+        localStorage.removeItem("userEmail");
+        localStorage.removeItem("actionType");
+        context.openAlertBox("success", res?.message);
+        setIsLoading(false);
+        history.push("/login");
+      } else {
+        context.openAlertBox("error", res?.message);
+      }
+    });
+  };
+
+  const validate = Object.values(formFields).every((el) => el);
+
+  const onChangeInput = (e) => {
+    const { name, value } = e.target;
+    setFormFields(() => {
+      return {
+        ...formFields,
+        [name]: value,
+      };
+    });
+  };
   return (
     <section className="bg-[#fff] w-full">
       <header className="w-full px-4 py-3 flex items-center justify-between z-50">
@@ -65,7 +118,7 @@ const ChangePassword = () => {
 
         <br />
 
-        <form className="w-full px-8 ">
+        <form className="w-full px-8" onSubmit={handleSubmit}>
           <div className="form-group mb-4 w-full flex items-center justify-center">
             <div className="relative w-full">
               <FormControl variant="outlined" fullWidth>
@@ -75,6 +128,10 @@ const ChangePassword = () => {
                 <OutlinedInput
                   id="outlined-adornment-password"
                   type={showPassword ? "text" : "password"}
+                  onChange={onChangeInput}
+                  name="newPassword"
+                  value={formFields.newPassword}
+                  disabled={isLoading === true ? true : false}
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
@@ -106,6 +163,10 @@ const ChangePassword = () => {
                 <OutlinedInput
                   id="outlined-adornment-password"
                   type={showPassword2 ? "text" : "password"}
+                  onChange={onChangeInput}
+                  name="confirmPassword"
+                  value={formFields.confirmPassword}
+                  disabled={isLoading === true ? true : false}
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
@@ -129,8 +190,16 @@ const ChangePassword = () => {
             </div>
           </div>
 
-          <Button className="!bg-blue-600 !text-white w-full !p-2">
-            Change Password
+          <Button
+            type="submit"
+            disabled={!validate}
+            className="!bg-blue-600 !text-white w-full !p-2"
+          >
+            {isLoading === true ? (
+              <CircularProgress color="inherit" />
+            ) : (
+              "Change Password"
+            )}
           </Button>
         </form>
       </div>

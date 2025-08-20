@@ -15,12 +15,25 @@ import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
 
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { MyContext } from "@/context/AppContext";
+import { useRouter } from "next/navigation";
+import CircularProgress from "@mui/material/CircularProgress";
+import { postData } from "@/utils/api";
 
 const SignUp = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [loadingGoogle, setLoadingGoogle] = useState(false);
   const [loadingFb, setLoadingFb] = useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
+  const [formFields, setFormFields] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const history = useRouter();
+  const context = useContext(MyContext);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
@@ -36,6 +49,50 @@ const SignUp = () => {
   function handleClickFb() {
     setLoadingFb(true);
   }
+
+  const validate = Object.values(formFields).every((el) => el);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    if (formFields.name === "") {
+      context.openAlertBox("error", "Please enter full name");
+      return false;
+    }
+    if (formFields.email === "") {
+      context.openAlertBox("error", "Please enter email");
+      return false;
+    }
+    if (formFields.password === "") {
+      context.openAlertBox("error", "Please enter password");
+      return false;
+    }
+    postData("/api/user/register", formFields).then((res) => {
+      if (res?.error === false) {
+        setIsLoading(false);
+        context.openAlertBox("success", res?.message);
+        localStorage.setItem("userEmail", formFields.email);
+        setFormFields({
+          name: "",
+          email: "",
+          password: "",
+        });
+        history.push("/verify-account");
+      } else {
+        context.openAlertBox("error", res?.message);
+        setIsLoading(false);
+      }
+    });
+  };
+
+  const onChangeInput = (e) => {
+    const { name, value } = e.target;
+    setFormFields(() => {
+      return {
+        ...formFields,
+        [name]: value,
+      };
+    });
+  };
   return (
     <section className="bg-[#fff] w-full">
       <header className="w-full px-4 py-3 flex items-center justify-between z-50">
@@ -100,13 +157,17 @@ const SignUp = () => {
           <span className="flex items-center w-[100px] h-[1px] bg-[rgba(0,0,0,0.2)]"></span>
         </div>
 
-        <form className="w-full px-8 ">
+        <form className="w-full px-8" onSubmit={handleSubmit}>
           <div className="form-group mb-4 w-full flex items-center justify-center">
             <TextField
               id="outlined-basic"
               label="Full Name"
               variant="outlined"
-              className="w-[100%] !mt-3"
+              name="name"
+              className="w-[100%] !mt-3 text-black"
+              disabled={isLoading === true ? true : false}
+              value={formFields.name}
+              onChange={onChangeInput}
             />
           </div>
           <div className="form-group mb-4 w-full flex items-center justify-center">
@@ -114,7 +175,11 @@ const SignUp = () => {
               id="outlined-basic"
               label="Email"
               variant="outlined"
+              name="email"
               className="w-[100%] !mt-3"
+              disabled={isLoading === true ? true : false}
+              value={formFields.email}
+              onChange={onChangeInput}
             />
           </div>
           <div className="form-group mb-4 w-full flex items-center justify-center">
@@ -126,6 +191,7 @@ const SignUp = () => {
                 <OutlinedInput
                   id="outlined-adornment-password"
                   type={showPassword ? "text" : "password"}
+                  name="password"
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
@@ -143,6 +209,9 @@ const SignUp = () => {
                       </IconButton>
                     </InputAdornment>
                   }
+                  disabled={isLoading === true ? true : false}
+                  value={formFields.password}
+                  onChange={onChangeInput}
                   label="Password"
                 />
               </FormControl>
@@ -157,7 +226,17 @@ const SignUp = () => {
               Forgot Password?
             </Link>
           </div>
-          <Button className="!bg-blue-600 !text-white w-full">Sign Up</Button>
+          <Button
+            type="submit"
+            className="!bg-blue-600 !text-white w-full"
+            disabled={!validate}
+          >
+            {isLoading === true ? (
+              <CircularProgress color="inherit" />
+            ) : (
+              "Signup"
+            )}
+          </Button>
         </form>
       </div>
     </section>

@@ -12,6 +12,8 @@ import Divider from "@mui/material/Divider";
 import { FaRegUser } from "react-icons/fa6";
 import { IoIosLogOut } from "react-icons/io";
 import { MyContext } from "@/context/AppContext";
+import { fetchData } from "@/utils/api";
+import Link from "next/link";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -33,6 +35,20 @@ const Header = () => {
   };
 
   const context = useContext(MyContext);
+  const logout = () => {
+    setAnchorMyAccount(null);
+    fetchData(`/api/user/logout?token=${localStorage.getItem("accessToken")}`, {
+      withCredentials: true,
+    }).then((res) => {
+      console.log(res);
+      if (res?.error === false) {
+        context.setIsLogin(false);
+        context.openAlertBox("success", res?.message);
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+      }
+    });
+  };
   return (
     <header
       className={`w-full h-[auto] py-2 ${
@@ -114,35 +130,36 @@ const Header = () => {
 
                 <div className="info">
                   <h3 className="text-[15px] font-[500] leading-5">
-                    akshat@gmail.com
+                    {context.userData?.name}
                   </h3>
                   <p className="text-[12px] font-[400] opacity-70">
-                    admin@gmail.com
+                    {context.userData?.email}
                   </p>
                 </div>
               </MenuItem>
               <Divider />
+              <Link href="/profile">
+                <MenuItem
+                  onClick={handleCloseMyAccount}
+                  className="flex items-center gap-3"
+                >
+                  <FaRegUser className="text-[16px]" />
 
-              <MenuItem
-                onClick={handleCloseMyAccount}
-                className="flex items-center gap-3"
-              >
-                <FaRegUser className="text-[16px]" />
-                <span className="text-[14px]">Profile</span>
-              </MenuItem>
-              <MenuItem
-                onClick={handleCloseMyAccount}
-                className="flex items-center gap-3"
-              >
+                  <span className="text-[14px]">Profile</span>
+                </MenuItem>
+              </Link>
+              <MenuItem onClick={logout} className="flex items-center gap-3">
                 <IoIosLogOut className="text-[18px]" />
                 <span className="text-[14px]">Sign Out</span>
               </MenuItem>
             </Menu>
           </div>
         ) : (
-          <Button className="!bg-blue-500 !btn-sm !text-white !rounded-full">
-            Sign In
-          </Button>
+          <Link href="/login">
+            <Button className="!bg-blue-500 !btn-sm !text-white !rounded-full">
+              Sign In
+            </Button>
+          </Link>
         )}
       </div>
     </header>

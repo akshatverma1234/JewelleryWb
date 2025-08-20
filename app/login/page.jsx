@@ -5,7 +5,6 @@ import { FaRegUser } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { SiFacebook } from "react-icons/si";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -13,14 +12,22 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
-
+import { useRouter } from "next/navigation";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { postData } from "@/utils/api";
+import { MyContext } from "@/context/AppContext";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const Login = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [loadingGoogle, setLoadingGoogle] = useState(false);
   const [loadingFb, setLoadingFb] = useState(false);
-  const [showPassword, setShowPassword] = React.useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [formFields, setFormFields] = useState({
+    email: "",
+    password: "",
+  });
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
@@ -36,6 +43,82 @@ const Login = () => {
   function handleClickFb() {
     setLoadingFb(true);
   }
+
+  const context = useContext(MyContext);
+  const history = useRouter();
+
+  const forgotPassword = () => {
+    if (formFields.email === "") {
+      context.openAlertBox("error", "Please enter email id");
+      setIsLoading(false);
+      return false;
+    } else {
+      context.openAlertBox("success", `Otp send to ${formFields.email}`);
+      localStorage.setItem("userEmail", formFields.email);
+      localStorage.setItem("actionType", "forgot-password");
+
+      postData("/api/user/forgot-password", {
+        email: formFields.email,
+      }).then((res) => {
+        if (res?.error === false) {
+          context.openAlertBox("success", res?.message);
+          history.push("/verify-account");
+        } else {
+          context.openAlertBox("error", res?.message);
+        }
+      });
+    }
+  };
+
+  const onChangeInput = (e) => {
+    const { name, value } = e.target;
+    setFormFields(() => {
+      return {
+        ...formFields,
+        [name]: value,
+      };
+    });
+  };
+  const validate = Object.values(formFields).every((el) => el);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    if (formFields.email === "") {
+      context.openAlertBox("error", "Please enter email");
+      setIsLoading(false);
+      return false;
+    }
+    if (formFields.password === "") {
+      context.openAlertBox("error", "Please enter password");
+      setIsLoading(false);
+      return false;
+    }
+    postData("/api/user/login", formFields, { withCredentials: true }).then(
+      (res) => {
+        console.log(res);
+        if (res?.error !== true) {
+          setIsLoading(false);
+          context.openAlertBox("success", res?.message);
+          localStorage.setItem("userEmail", formFields.email);
+          setFormFields({
+            email: "",
+            password: "",
+          });
+          localStorage.setItem("accessToken", res?.data?.accessToken);
+          localStorage.setItem("refreshToken", res?.data?.refreshToken);
+
+          context.setIsLogin(true);
+          history.push("/");
+        } else {
+          context.openAlertBox("error", res?.message);
+          setIsLoading(false);
+        }
+      }
+    );
+  };
+
   return (
     <section className="bg-[#fff] w-full">
       <header className="w-full px-4 py-3 flex items-center justify-between z-50">
@@ -100,13 +183,17 @@ const Login = () => {
           <span className="flex items-center w-[100px] h-[1px] bg-[rgba(0,0,0,0.2)]"></span>
         </div>
 
-        <form className="w-full px-8 ">
+        <form className="w-full px-8" onSubmit={handleSubmit}>
           <div className="form-group mb-4 w-full flex items-center justify-center">
             <TextField
               id="outlined-basic"
               label="Email"
               variant="outlined"
               className="w-[100%] !mt-3"
+              name="email"
+              value={formFields.email}
+              disabled={isLoading === true ? true : false}
+              onChange={onChangeInput}
             />
           </div>
           <div className="form-group mb-4 w-full flex items-center justify-center">
@@ -118,6 +205,10 @@ const Login = () => {
                 <OutlinedInput
                   id="outlined-adornment-password"
                   type={showPassword ? "text" : "password"}
+                  name="password"
+                  value={formFields.password}
+                  disabled={isLoading === true ? true : false}
+                  onChange={onChangeInput}
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
@@ -142,14 +233,24 @@ const Login = () => {
           </div>
           <div className="form-group mb-4 w-full flex items-center justify-between">
             <FormControl control={<Checkbox />} label="Remember me" />
-            <Link
-              href="/forgot-password"
-              className="text-blue-500 font-[700] text-[15px] hover:underline hover:text-gray-700"
+            <a
+              className="text-blue-500 font-[700] text-[15px] hover:underline hover:text-gray-700 cursor-pointer"
+              onClick={forgotPassword}
             >
               Forgot Password?
-            </Link>
+            </a>
           </div>
-          <Button className="!bg-blue-600 !text-white w-full">Sign In</Button>
+          <Button
+            type="submit"
+            className="!bg-blue-600 !text-white w-full"
+            disabled={!validate}
+          >
+            {isLoading === true ? (
+              <CircularProgress color="inherit" />
+            ) : (
+              "Login"
+            )}
+          </Button>
         </form>
       </div>
     </section>
